@@ -35,7 +35,7 @@ let Paddle = game => {
     return false
   }
 
-  return paddle;
+  return paddle
 }
 
 let Ball = game => {

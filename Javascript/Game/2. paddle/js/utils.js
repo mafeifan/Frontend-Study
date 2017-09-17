@@ -22,9 +22,9 @@ function aInb(x, x1, x2) {
 
 function loadImageAsync(url) {
   return new Promise((resolve, reject) => {
-    let image = new Image();
-    image.src = url;
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error('Could not load image at ' + url));
+    let image = new Image()
+    image.src = url
+    image.onload = () => resolve(image)
+    image.onerror = () => reject(new Error('Could not load image at ' + url))
   });
 }
