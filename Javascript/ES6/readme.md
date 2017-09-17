@@ -1,0 +1,1 @@
+- native-module chrome支持module

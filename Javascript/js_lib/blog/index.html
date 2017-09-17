@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+<title>封装库</title>
+<script type="text/javascript" src="../tool.js"></script>
+<script type="text/javascript" src="../base.js"></script>
+<link rel="stylesheet" type="text/css" href="index.css" />
+<script>
+window.onload = function () {
+	$().getClass('member').hover(function () {
+		$(this).css('background', 'url(images/arrow2.png) no-repeat 55px center');
+		$().getClass('member_ul').show();
+	}, function () {
+		$(this).css('background', 'url(images/arrow.png) no-repeat 55px center');
+		$().getClass('member_ul').hide();
+	});
+	
+
+	var login = $().getId('login');
+	var screen = $().getId('screen');
+	login.center(350, 250);
+	$().resize(function () {
+		login.center(350, 250);
+		if (login.css('display') == 'block') {
+			screen.lock();
+		}
+	});
+	$().getClass('login').click(function () {
+		login.css('display', 'block');
+		screen.lock();
+	});
+	$().getClass('close').click(function () {
+		login.css('display', 'none');
+		screen.unlock();
+	});
+
+	login.drag();	
+};
+</script>
+</head>
+<body>
+<div id="header">
+	<div class="logo"><img src="images/logo.gif" alt="" /></div>
+	<div class="member">个人中心
+		<ul class="member_ul">
+			<li><a href="###">设置</a></li>
+			<li><a href="###">换肤</a></li>
+			<li><a href="###">帮助</a></li>
+			<li><a href="###">退出</a></li>
+		</ul>
+	</div>
+	<div class="login">登录</div>
+</div>
+
+
+<div id="login">
+	<h2><img src="images/close.png" alt="" class="close" />网站登录</h2>
+	<div class="user">帐 号：<input type="text" name="user" class="text" /></div>
+	<div class="pass">密 码：<input type="password" name="pass" class="text" /></div>
+	<div class="button"><input type="button" class="submit" value="" /></div>
+	<div class="other">注册新用户 | 忘记密码？</div>
+</div>
+
+<div id="screen"></div>
+
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+<p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p><p>1</p>
+
+
+</body>
+</html>

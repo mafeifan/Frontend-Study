@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>game</title>
+  <style>
+    #container {
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid black;
+    }
+    #speedValue {
+      width: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <p>按F开始</p>
+
+  控制速度：
+  <input id="speed" type="range" min="1" step="1" value="30" defaultValue="30" max="100">
+  <input id="speedValue" type="text" value="30">
+  <div>
+    <textarea name="logArea" id="log" cols="50" rows="20"></textarea>
+  </div>
+</div>
+<script src="js/utils.js"></script>
+<!--<script type="module">-->
+  <!--import {G, rectIntersects, aInb} from './js/utils.js'-->
+<!--</script>-->
+<script src="js/main.js"></script>
+<script src="js/scene.js"></script>
+
+
+</body>
+</html>
+
+

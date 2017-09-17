@@ -1,0 +1,67 @@
+<style type="text/css">
+a.demo {
+    display:block;
+    line-height: 30px;
+    width: 80px;
+    text-align: center;
+    margin: 100px auto;
+    background: #80CB1B;
+    font-size: 16px;
+    padding: 8px 19px 9px;
+    -moz-box-shadow: 0 0 5px #343434;
+    -webkit-box-shadow: 0 0 5px #fff;
+    box-shadow: 0 0 5px #343434;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+
+    /* 应用呼吸灯动画 */
+    -webkit-animation-name: breathingLight;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+
+/*
+关键帧:代码中的 0% 和 100% 可以分别使用 from 和 to 来代替,表示动画起始和终止时的状态
+
+*/ 
+@-webkit-keyframes 'wobble' {
+    0% {
+      left: 100px;
+    }
+    40% {
+      left: 150px;
+    }
+    60% {
+      left: 75px;
+    }
+    100% {
+      left: 100px;
+    }
+}
+
+/*
+    呼吸灯动画
+*/
+@-webkit-keyframes 'breathingLight' {
+    from {
+        background-color: #80CB1B;
+        -webkit-box-shadow:0 0 5px #ccc;
+        }
+    50% {
+        background-color: #B7F20F;
+        -webkit-box-shadow: 0 0 10px #398B08;
+        }
+    to {
+        background-color: #80CB1B;
+        -webkit-box-shadow:0 0 5px #ccc;
+    }
+}
+
+
+</style>
+
+ <a href="#" class="demo">Button</a>
