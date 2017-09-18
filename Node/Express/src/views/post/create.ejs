@@ -1,0 +1,16 @@
+<% include ../layout/header %>
+<h2>Write a new post</h2>
+<form method="post" role="form">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" placeholder="Title" required>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control" name="body" placeholder="Love Express! It's a great tool for building websites." rows="3" required></textarea>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary">
+    </div>
+</form>
+<% include ../layout/footer %>

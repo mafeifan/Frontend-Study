@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Hello, world!</title>
-</head>
-<body>
-    <%= message %>
-</body>
-</html>
+<% include layout/header %>
+  <% if (posts.length) { %>
+    <% posts.forEach(function(entry) { %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="text-muted pull-right">
+              <%= entry.published %>
+            </div>
+            <%= entry.title %>
+        </div>
+        <div class="panel-body">
+          <%= entry.body %>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    No entries! <a href="/post">Add one!</a>
+  <% } %>
+<% include layout/footer %>
