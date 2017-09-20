@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>form reset的使用</title>
+</head>
+
+<body>
+    <p>客户端验证是为了更好的用户体验，但可以绕过</p>
+    <p>出于安全考虑，服务端验证是必要的</p>
+    <p>https://docs.angularjs.org/guide/forms</p>
+<div ng-app="app" ng-controller="formController">
+  <form ng-submit="submit()">
+    First Name:<br>
+    <input type="text" ng-model="user.firstName"><br>
+    Last Name:<br>
+    <input type="text" ng-model="user.lastName">
+    <br><br>
+    <button type="button" ng-click="reset()">Reset</button>
+    <button type="submit" ng-click="submit()">Submit</button>
+  </form>
+  <p>form = {{user}}</p>
+  <p>origin = {{origin}}</p>
+</div>
+<script src="../angular.js"></script>
+
+<script>
+
+angular.module('app', [])
+.controller('formController', formController)
+function formController ($scope) {
+  $scope.origin = {firstName : "Ma",lastName : "Fei"};
+  $scope.reset = function(){
+    $scope.user = angular.copy($scope.origin)
+  }
+  $scope.submit = function() {
+    console.log(this === $scope)
+  };
+  $scope.reset();
+};
+</script>
+
+
+
+
+</body>
+</html>
+      

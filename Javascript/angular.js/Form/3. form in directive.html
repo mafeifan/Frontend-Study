@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ng-form</title>
+  </head>
+  <body>
+    
+    
+    <my-form-demo></my-form-demo>  
+
+  </body>
+</html>
+<script src="../angular.js"></script>
+
+<script>
+
+angular.module('myApp', []) 
+.controller('TestCtrl', function($scope){
+    console.log($scope)
+})
+.directive('myFormDemo', function() {
+  return {
+    restrict   : 'E',
+    templateUrl: 'templates/myFormDemo.html',
+    // require    : '^form',
+    scope      : {
+    },
+    link       : function (scope, element, attrs, formCtrl) {
+        // scope.formCtrl = formCtrl;
+    },
+    controller : ['$scope', '$element', '$attrs', '$http', function ($scope, $element, $attrs, $http) {
+    }],
+  }
+})
+</script>
+
+
+
+
+</body>
+</html>
+      

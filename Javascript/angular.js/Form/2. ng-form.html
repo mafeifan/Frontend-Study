@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ng-form</title>
+  </head>
+  <body>
+    
+  <div ng-controller="TestCtrl">
+    
+	<div ng-form="myForm">
+	  <input name='Email' type='email' label='Email Address' placeholder="Enter email" ng-model='user.email'></input>
+		<p style="color: red" ng-show="myForm.Email.$dirty && myForm.Email.$invalid">非法邮箱</p>
+		<pre>{{ myForm | json }}</pre>
+	</div>
+  </div> 
+
+
+  </body>
+</html>
+<script src="../angular.js"></script>
+
+<script>
+
+angular.module('myApp', []) 
+.controller('TestCtrl', function($scope){
+    console.log($scope)
+  
+})
+</script>
+
+
+
+
+</body>
+</html>
+      
