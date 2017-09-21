@@ -1,0 +1,3 @@
+  <input name="Email" type="email" label="Email Address" placeholder="Enter email" ng-model="user.email"></input>
+  <p style="color: red" ng-show="myForm.Email.$dirty && myForm.Email.$invalid">非法邮箱</p>
+  <pre>{{ myForm | json }}</pre>

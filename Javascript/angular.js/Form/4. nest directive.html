@@ -5,10 +5,11 @@
     <title>ng-form</title>
   </head>
   <body>
-    
-    
-    <my-form-demo></my-form-demo>  
-
+    <h3>这里演示怎么调用父级指令</h3>
+    <p>查阅：https://stackoverflow.com/questions/17618318/pass-form-to-directive</p>
+    <div ng-form="myForm">
+      <my-input-demo></my-input-demo>  
+    </div>
   </body>
 </html>
 <script src="../angular.js"></script>
@@ -17,17 +18,21 @@
 
 angular.module('myApp', []) 
 .controller('TestCtrl', function($scope){
-    console.log($scope)
 })
-.directive('myFormDemo', function() {
+.directive('myInputDemo', function() {
   return {
     restrict   : 'E',
-    templateUrl: 'templates/myFormDemo.html',
+    templateUrl: 'templates/myInputDemo.html',
+    require    : '^form',  // 引入父级的指令
     scope      : {
     },
     link       : function (scope, element, attrs, formCtrl) {
+        // 这样就可以在controller中调用了
+        scope.myForm = formCtrl;
     },
     controller : ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+      
+
     }],
   }
 })
