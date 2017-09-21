@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title></title>
+  </head>
+  <body>
+
+  </body>
+</html>
+<script src="debug_angular.js"></script>
+
+<script>
+
+// var exampleMinErr = angular.$$minErr('ng');
+// throw exampleMinErr('one', 'This {0} is {1}', 'foo', 'bar');
+
+
+/**
+ * 一个工具方法，抛出错误异常
+ *
+ * 使用
+ * $errStr = myMinErr()
+ * throw $errStr('This {0} is {1}', 'foo', 'bar')
+ * 返回：Uncaught Error: This foo is bar
+ *
+ * $errType = myMinErr(TypeError)
+ * throw $errType('This {0} is {1}', 'foo', 'bar')
+ * 返回：Uncaught TypeError: This foo is bar
+ *
+ * 因为返回的是个闭包，跟上面一样
+ * throw myMinErr(TypeError)('This {0} is {1}', 'foo', 'bar')
+ */
+function myMinErr(ErrorConstructor) {
+  ErrorConstructor = ErrorConstructor || Error;
+  return function() {
+    var message = '', arg = arguments, template = arguments[0]
+    // 提取 {0}, {1}
+    message += template.replace(/\{\d+\}/g, function(match) {
+      // 从"{0}" 中提取出"0" 然后返回数字0
+      var index = +match.slice(1, -1) + 1
+      // 保证长度一致 $errStr('This {0} is {1} {2}', 'foo', 'bar')
+      if (index < arg.length) {
+        // 这里可以传个其他方法对实参进行验证或过滤
+        return arg[index]
+      }
+      return match
+    }) 
+    return new ErrorConstructor(message)
+  }
+}
+
+$errStr = myMinErr()
+console.log($errStr('This {0} is {1}', 'foo', 'bar'))
+console.log($errStr('This {0} is {1} and {2}', 'foo', 'bar', 'xx'))
+console.log($errStr('This {0} is {1} {2}', 'foo', 'bar'))
+console.log($errStr('cpta', "Can't copy! TypedArray destination cannot be mutated."))
+
+throw myMinErr(TypeError)('This {0} is {1}', 'foo', 'bar')
+</script>
+
+
+
+
+</body>
+</html>
+      

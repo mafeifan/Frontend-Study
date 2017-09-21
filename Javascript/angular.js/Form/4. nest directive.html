@@ -15,10 +15,7 @@
 <script src="../angular.js"></script>
 
 <script>
-
 angular.module('myApp', []) 
-.controller('TestCtrl', function($scope){
-})
 .directive('myInputDemo', function() {
   return {
     restrict   : 'E',
@@ -31,8 +28,7 @@ angular.module('myApp', [])
         scope.myForm = formCtrl;
     },
     controller : ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-      
-
+      console.log($scope)
     }],
   }
 })
