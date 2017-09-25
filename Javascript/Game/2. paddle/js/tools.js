@@ -1,7 +1,6 @@
-export function addTextToBody(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  document.body.appendChild(div);
+export function log(str) {
+  // let G = console.log.bind(console);
+  return console.log(str)
 }
 
 // 碰撞检测工具方法

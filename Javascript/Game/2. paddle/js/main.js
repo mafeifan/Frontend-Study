@@ -1,4 +1,5 @@
-import {rectIntersects, aInb, loadImageAsync} from './tools.js'
+import {log, rectIntersects, aInb, loadImageAsync} from './tools.js'
+import {Score} from './score.js'
 
 let blocks = []
 
@@ -122,7 +123,6 @@ let Events = {
   },
   trigger() {
     let actions = Object.keys(this.actions)
-    // G(this.keydowns)
     for (let i = 0; i < actions.length; i++) {
       let key = actions[i]
       if (this.keydowns[key]) {
@@ -130,17 +130,6 @@ let Events = {
         this.actions[key]()
       }
     }
-  }
-}
-
-// 左下角的分数
-class Score {
-  constructor() {
-    this.step = 100 // 累加值
-    this.initNumber = 0
-  }
-  up() {
-    this.initNumber += this.step
   }
 }
 
@@ -297,8 +286,6 @@ let enableDebugMode = (game, enable) => {
 // 执行流程
 // 初始化game
 
-
-
 class Scene {
   constructor(game) {
     this.game = game
@@ -333,7 +320,6 @@ class SceneGameOver extends Scene {
     this.game.context.fillText('游戏结束，按R重玩', 100, 290)
   }
 }
-
 
 let GameScene = game => {
   // 初始化
@@ -374,7 +360,7 @@ let GameScene = game => {
       // 球和板相碰
       for (let i = 0; i < blocks.length; i++) {
         if (blocks[i].collide(ball)) {
-          G('block 相撞')
+          log('block 相撞')
           blocks[i].kill()
           // 反弹
           ball.rebound()
@@ -399,7 +385,7 @@ let GameScene = game => {
   game.canvas.addEventListener('mousedown', event => {
     let x = event.offsetX
     let y = event.offsetY
-    G(x, y, event)
+    log(x, y, event)
     // 检查是否点中了 ball
     if (ball.hasPoint(x, y)) {
       // 设置拖拽状态
@@ -411,7 +397,7 @@ let GameScene = game => {
     let y = event.offsetY
     // log(x, y, 'move')
     if (enableDrag) {
-      G(x, y, 'drag')
+      log(x, y, 'drag')
       ball.x = x
       ball.y = y
     }
@@ -423,7 +409,6 @@ let GameScene = game => {
   return s
 }
 
-
 export function main() {
   let images = {
     ball: 'images/ball.png',
@@ -432,7 +417,6 @@ export function main() {
   }
 
   // load Images
-
   let game = Game(images, g => {
     // 载入图片后要执行的语句
     // let scene = SceneStart(g)
@@ -440,8 +424,5 @@ export function main() {
     game.runWithScene(scene)
   });
 
-
   enableDebugMode(game, true)
 }
-
-// export _main_()
