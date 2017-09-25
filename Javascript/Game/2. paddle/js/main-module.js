@@ -295,26 +295,7 @@ let enableDebugMode = (game, enable) => {
 // 执行流程
 // 初始化game
 
-let _main_ = () => {
-  let images = {
-    ball: 'images/ball.png',
-    block: 'images/block.png',
-    paddle: 'images/paddle.png',
-  }
 
-  // load Images
-
-
-  let game = Game(images, g => {
-    // 载入图片后要执行的语句
-    // let scene = SceneStart(g)
-    let scene = SceneGameStart.new(g)
-    game.runWithScene(scene)
-  });
-
-
-  enableDebugMode(game, true)
-}
 
 class Scene {
   constructor(game) {
@@ -440,4 +421,26 @@ let GameScene = game => {
   return s
 }
 
-_main_()
+
+export function main() {
+  let images = {
+    ball: 'images/ball.png',
+    block: 'images/block.png',
+    paddle: 'images/paddle.png',
+  }
+
+  // load Images
+
+
+  let game = Game(images, g => {
+    // 载入图片后要执行的语句
+    // let scene = SceneStart(g)
+    let scene = SceneGameStart.new(g)
+    game.runWithScene(scene)
+  });
+
+
+  enableDebugMode(game, true)
+}
+
+// export _main_()
