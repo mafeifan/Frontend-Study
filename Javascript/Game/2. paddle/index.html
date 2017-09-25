@@ -20,22 +20,17 @@
 <div id="container">
   <canvas id="canvas" width="400" height="300"></canvas>
   <p>按F开始</p>
-
   控制速度：
   <input id="speed" type="range" min="1" step="1" value="30" defaultValue="30" max="100">
   <input id="speedValue" type="text" value="30">
   <div>
     <textarea name="logArea" id="log" cols="50" rows="20"></textarea>
   </div>
+  <!--
+  https://paulirish.github.io/es-modules-todomvc/
+  -->
 </div>
-<script src="js/utils.js"></script>
-<script src="js/main.js"></script>
-<!-- <script type="module">
-  import {addTextToBody, rectIntersects, aInb, loadImageAsync} from './js/utils-module.js'
-  import {main} from './js/main-module.js'
-  main();
-</script> -->
-
+<script type="module" src="./js/bootstrap.js"></script>
 </body>
 </html>
 
