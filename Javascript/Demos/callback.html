@@ -1,0 +1,26 @@
+<script>
+	// 因为callBack在promise内，是异步操作
+	function run(p, callBack) {
+		let promise = new Promise((resolve, reject) => {
+			resolve(p)
+		})
+
+		promise.then((res) => {
+ 			callBack(obj)
+ 		})
+
+		let obj = {
+			name: 'finley'
+		}
+
+		console.log(p)
+
+		return obj;
+	}
+
+
+	// 方法中是回调函数的例子
+	run('11', function(obj) {
+		console.log(obj)
+	})
+</script>

@@ -98,7 +98,7 @@ let Block = (game, position) => {
     lives: position[2] || 1, // 砖块生命值
     image: img.image,
     w: img.w,
-    h: img.h
+    h: img.h,
   }
 
   block.kill = () => {
@@ -123,32 +123,28 @@ let Block = (game, position) => {
  * @constructor
  */
 let Game = (images, runCallback) => {
-  // 载入图片
-  // images 是一个对象, 里面是图片的引用名字和图片路径
-  // 程序会在所有图片载入成功后才运行
+
+  // 异步加载素材图片，所有成功后运行回调
+  let promises = Object.keys(images)
+    .map(key => loadImageAsync(images[key]).then(img => g.images[key] = img))
+
+  Promise.all(promises).then(() => {
+    runCallback(g)
+  })
+
+  const canvas = document.querySelector('#canvas')
+  const context = canvas.getContext('2d')
 
   let g = {
     scene: null,
     images: {}
   }
 
-  const canvas = document.querySelector('#canvas')
-  const context = canvas.getContext('2d')
-
   g.canvas = canvas
   g.context = context
 
   g.drawImage = img => g.context.drawImage(img.image, img.x, img.y)
   g.clear = () => g.context.clearRect(0, 0, canvas.width, canvas.height)
-
-  // 注册键盘事件
-  window.addEventListener('keydown', () => {
-    Events.keydowns[event.key] = true
-  })
-
-  window.addEventListener('keyup', () => {
-    Events.keydowns[event.key] = false
-  })
 
   g.update = function() {
     g.scene.update()
@@ -158,28 +154,19 @@ let Game = (images, runCallback) => {
     g.scene.draw()
   }
 
-  // TODO
   // 轮询器
-  window.fps = 30
+  // 无尽的循环
   let runLoop = () => {
+    // 检测按键
     Events.trigger()
     g.update()
     g.clear()
     g.draw()
-
+    log(window.fps)
     setTimeout(() => {
       runLoop()
     }, 1000 / window.fps)
   }
-
-  // load all images
-  let promises = Object.keys(images)
-    .map(key => loadImageAsync(images[key])
-      .then(img => g.images[key] = img))
-
-  Promise.all(promises).then(() => {
-    g.__start()
-  })
 
   g.imageByName = name => {
     let img = g.images[name]
@@ -190,7 +177,6 @@ let Game = (images, runCallback) => {
     }
   }
 
-  // 开跑
   g.runWithScene = scene => {
     g.scene = scene
     setTimeout(() => {
@@ -200,10 +186,6 @@ let Game = (images, runCallback) => {
 
   g.replaceScene = scene => {
     g.scene = scene
-  }
-
-  g.__start = () => {
-    runCallback(g)
   }
 
   return g;
@@ -392,11 +374,23 @@ let GameScene = game => {
 }
 
 export function main() {
+  // 帧数
+  window.fps = 30
+
   let images = {
     ball: 'images/ball.png',
     block: 'images/block.png',
     paddle: 'images/paddle.png',
   }
+
+  // 注册键盘事件
+  window.addEventListener('keydown', () => {
+    Events.keydowns[event.key] = true
+  })
+
+  window.addEventListener('keyup', () => {
+    Events.keydowns[event.key] = false
+  })
 
   // load Images
   let game = Game(images, g => {

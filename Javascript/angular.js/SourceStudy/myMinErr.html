@@ -31,8 +31,7 @@
  * 因为返回的是个闭包，跟上面一样
  * throw myMinErr(TypeError)('This {0} is {1}', 'foo', 'bar')
  */
-function myMinErr(ErrorConstructor) {
-  ErrorConstructor = ErrorConstructor || Error;
+function myMinErr(ErrorConstructor = Error) {
   return function() {
     var message = '', arg = arguments, template = arguments[0]
     // 提取 {0}, {1}
