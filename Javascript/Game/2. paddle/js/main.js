@@ -418,9 +418,9 @@ export function main() {
 
   // load Images
   let game = Game(images, g => {
+    // let scene = SceneGameStart.new(g)
     // 载入图片后要执行的语句
-    // let scene = SceneStart(g)
-    let scene = SceneGameStart.new(g)
+    let scene = GameScene(g)
     game.runWithScene(scene)
   });
 
