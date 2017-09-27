@@ -1,5 +1,6 @@
 import {log, rectIntersects, aInb, loadImageAsync} from './tools.js'
-import {Score} from './score.js'
+import {Score}  from './score.js'
+import {Events} from './events.js'
 
 let blocks = []
 
@@ -114,25 +115,6 @@ let Block = (game, position) => {
   return block
 }
 
-// function
-let Events = {
-  actions: {},
-  keydowns: {}, // {a: true, b: true}
-  registerAction(name, callback) {
-    this.actions[name] = callback
-  },
-  trigger() {
-    let actions = Object.keys(this.actions)
-    for (let i = 0; i < actions.length; i++) {
-      let key = actions[i]
-      if (this.keydowns[key]) {
-        // 如果按键被按下, 调用注册的 action
-        this.actions[key]()
-      }
-    }
-  }
-}
-
 /**
  *
  * @param images  对象，要载入的图片
@@ -149,7 +131,6 @@ let Game = (images, runCallback) => {
     scene: null,
     images: {}
   }
-
 
   const canvas = document.querySelector('#canvas')
   const context = canvas.getContext('2d')
@@ -296,6 +277,7 @@ class Scene {
   update() {
 
   }
+  // 不用new Scene(game)了，通过Scene.new(game)
   static new(game) {
     return new this(game)
   }
