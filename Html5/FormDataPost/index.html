@@ -2,10 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Form Data Demo </title>
-    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <title>用formData和fetch实现ajax上传图片</title>
 </head>
 <body>
+    <div>
+        <h3>参考</h3>
+        <ul>
+            <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Response">fetch</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a></li>
+        </ul>
+    </div>
     <form name="form1" id="form1">
         <p>name:<input type="text" name="name"></p>
         <p>gender:<input type="radio" name="gender" value="1">male <input type="radio" name="gender" value="2">female</p>
@@ -13,28 +19,50 @@
         <p><input type="button" name="b1" value="submit" id="submit" onclick="formSubmit()"></p>
     </form>
     <div id="result"></div>
+
     <script>
         function formSubmit() {
-            var data = new FormData($('#form1')[0]);
-            $.ajax({
-                url        : 'server.php',
-                type       : 'POST',
-                data       : data,
-                dataType   : 'JSON',
-                cache      : false,
-                processData: false,
-                contentType: false
-            }).done(function (ret) {
+            let form = document.querySelector('#form1');
+            let data = new FormData(form);
+
+            fetch('server.php', {
+              method: 'POST',
+              body: new FormData(form)
+            })
+            .then(res => {
+              return res.json();
+            })
+            .then(ret => {
                 if (ret['isSuccess']) {
-                    var result = '';
+                    let result = '';
                     result += 'name=' + ret['name'] + '<br>';
                     result += 'gender=' + ret['gender'] + '<br>';
                     result += '<img src="' + ret['photo'] + '" width="100">';
-                    $('#result').html(result);
+                    document.querySelector('#result').innerHTML = result
                 } else {
-                    alert('提交失敗');
+                    alert('提交失败');
                 }
-            });
+            })
+
+            // $.ajax({
+            //     url        : 'server.php',
+            //     type       : 'POST',
+            //     data       : data,
+            //     dataType   : 'JSON',
+            //     cache      : false,
+            //     processData: false,
+            //     contentType: false
+            // }).done(function (ret) {
+            //     if (ret['isSuccess']) {
+            //         var result = '';
+            //         result += 'name=' + ret['name'] + '<br>';
+            //         result += 'gender=' + ret['gender'] + '<br>';
+            //         result += '<img src="' + ret['photo'] + '" width="100">';
+            //         $('#result').html(result);
+            //     } else {
+            //         alert('提交失败');
+            //     }
+            // });
             return false;
         }
     </script>
