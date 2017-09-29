@@ -12,11 +12,11 @@
             <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a></li>
         </ul>
     </div>
-    <form name="form1" id="form1">
-        <p>name:<input type="text" name="name"></p>
+    <form name="form1" id="form1" onsubmit="return formSubmit();">
+        <p>name:<input type="text" name="name" required></p>
         <p>gender:<input type="radio" name="gender" value="1">male <input type="radio" name="gender" value="2">female</p>
-        <p>photo:<input type="file" name="photo" id="photo"></p>
-        <p><input type="button" name="b1" value="submit" id="submit" onclick="formSubmit()"></p>
+        <p>photo:<input type="file" name="photo" id="photo" required></p>
+        <p><input type="submit" name="submit" value="submit"></p>
     </form>
     <div id="result"></div>
 
@@ -44,6 +44,8 @@
                 }
             })
 
+            return false;
+
             // $.ajax({
             //     url        : 'server.php',
             //     type       : 'POST',
@@ -63,7 +65,6 @@
             //         alert('提交失败');
             //     }
             // });
-            return false;
         }
     </script>
 </body>
