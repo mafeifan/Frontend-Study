@@ -29,9 +29,8 @@
               method: 'POST',
               body: new FormData(form)
             })
-            .then(res => {
-              return res.json();
-            })
+            // https://developer.mozilla.org/zh-CN/docs/Web/API/Body/json
+            .then(res => res.json())
             .then(ret => {
                 if (ret['isSuccess']) {
                     let result = '';
