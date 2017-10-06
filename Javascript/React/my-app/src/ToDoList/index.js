@@ -28,21 +28,23 @@ class TypeNew extends React.Component {
 class ToDoItems extends React.Component {
   handleDel = (e) => {
     const delIndex = e.target.getAttribute('data-key');
-    this.props.items.splice(delIndex, 1);
+    this.props.items[delIndex].done = true;
+    // this.props.items.splice(delIndex, 1);
     this.props.onDel(this.props.items);
   }
   render() {
     return (<ul>
       {this.props.items.map((item, i) =>
-        <li key={item.text}>
-          <label>{item.text}</label>
-          <button onClick={this.handleDel} data-key={i}>delete</button>
+        <li key={i}>
+          <label style={item.done ? { textDecoration: 'line-through', color: '#ccc' } : null}>
+            {item.text}
+          </label>
+          <button onClick={this.handleDel} data-key={i}>X</button>
         </li>
       )}
     </ul>);
   }
 }
-
 
 export default class ToDoList extends React.Component {
   constructor(props) {
@@ -53,22 +55,35 @@ export default class ToDoList extends React.Component {
         { text: 'build an AngularJS app', done: false }
       ]
     };
+    this.calRemaining();
     // 这行非常重要
     // https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/
     this.handleChange = this.handleChange.bind(this);
-
+    this.handleArchive = this.handleArchive.bind(this);
   }
 
   handleChange(item) {
     this.setState({
       items: item
-    })
-    console.log(this);
+    });
+    this.calRemaining();
+  }
+
+  handleArchive() {
+    const oldItems = this.state.items.slice();
+    this.setState({
+      items: oldItems.filter(item => !item.done)
+    });
+  }
+
+  calRemaining() {
+    this.remaining = this.state.items.filter(item => !item.done).length;
   }
 
   render() {
     return (
       <div>
+        <span>{this.remaining} of {this.state.items.length} remaining <button onClick={this.handleArchive}>archive</button></span>
         <TypeNew onAdd={this.handleChange} items={this.state.items} />
         <ToDoItems onDel={this.handleChange} items={this.state.items} />
       </div>
