@@ -1,0 +1,33 @@
+<script>
+var myObj = {
+  specialFunction: function () {
+
+  },
+
+  anotherSpecialFunction: function () {
+
+  },
+
+  getAsyncData: function (cb) {
+    cb();
+  },
+
+  // render: function () {
+  //   var that = this;
+  //   this.getAsyncData(function () {
+  //      that.specialFunction();
+  //      that.anotherSpecialFunction();
+  //   });
+  // }
+
+  render: function () {
+    this.getAsyncData(function () {
+       this.specialFunction();
+       this.anotherSpecialFunction();
+    }.bind(this));
+  }
+
+};
+
+myObj.render();
+</script>

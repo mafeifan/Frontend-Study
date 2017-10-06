@@ -1,0 +1,17 @@
+<script>
+window.color = 'red';
+var o = {color: 'blue'};
+
+function sayColor(){
+  alert(this.color);
+}
+
+// bind()方法创建一个新的函数, 当被调用时，将其this关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列。
+var func = sayColor.bind(o);
+// "blue"
+func();
+
+var func2 = sayColor.bind(this);
+// "red"
+func2();
+</script>

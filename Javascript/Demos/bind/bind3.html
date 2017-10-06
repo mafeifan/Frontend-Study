@@ -1,0 +1,17 @@
+<button>Click Me!</button>
+<script>
+var logger = {
+  x: 0,
+  updateCount: function(){
+    this.x++;
+    console.log(this.x);
+  }
+}
+
+
+// document.querySelector('button').addEventListener('click', function(){
+//   logger.updateCount();
+// });
+// 优化后
+document.querySelector('button').addEventListener('click', logger.updateCount.bind(logger))
+</script>
