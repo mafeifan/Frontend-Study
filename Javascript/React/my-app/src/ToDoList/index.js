@@ -63,6 +63,7 @@ export default class ToDoList extends React.Component {
   }
 
   handleChange(item) {
+    console.log(this)
     this.setState({
       items: item
     });
