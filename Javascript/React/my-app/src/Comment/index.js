@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class CommentForm extends React.Component {
   handleAdd = (e) => {
@@ -36,16 +37,21 @@ class CommentForm extends React.Component {
 class CommentList extends React.Component {
   render() {
     const items = this.props.items;
-    return items.map((item, id) => <Comment item={item} key={id}></Comment>);
+    return items.map((item, id) => <Comment comment={item} key={id}></Comment>);
   }
 }
 
 class Comment extends React.Component {
+  // https://github.com/facebook/prop-types
+  static propTypes = {
+    comment: PropTypes.object.isRequired
+  }
   render() {
+    const { comment } = this.props.comment;
     return (
       <div style={{ border: '1px solid black' }}>
-        <span>{this.props.item.name}</span>
-        <p>{this.props.item.content}</p>
+        <span>{comment.name}</span>
+        <p>{comment.content}</p>
       </div>
     );
   }
