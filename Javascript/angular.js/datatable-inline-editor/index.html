@@ -129,8 +129,8 @@ app.controller('RoleEditorController', function($scope, $q, $http) {
             title  : 'Description',
             editing: 'text'
         },
-        'action',
-        // {class: 'Column/ActionColumn', template: ['view', 'update', 'delete']},
+        //'action',
+        {class: 'ActionColumn', template: ['view', 'update', 'delete']},
       ]
   };
 });

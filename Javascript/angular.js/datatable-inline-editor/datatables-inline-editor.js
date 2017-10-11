@@ -343,7 +343,7 @@
                     var tableData = getDataTable().data();
                     var itemInfo = getItemByRow(row);
                     var primaryKeyName = '_id';
-                    var newData = angular.forEach(tableData, function (item) {
+                    angular.forEach(tableData, function (item) {
                         item.IsPrimary = itemInfo[primaryKeyName] !== item[primaryKeyName] ? false : true;
                     });
                 };
@@ -555,10 +555,12 @@
 
                 function DatatablesColumnsBuilder(columnSettings) {
                     var columns = [];
-                    for (var i = 0; i < columnSettings.length; i++) {
-                        var column = columnSettings[i];
-                        var columnOption = null;
-                        if (column === 'action') {
+                    for (let i = 0; i < columnSettings.length; i++) {
+                        let column = columnSettings[i];
+                        let columnOption = null;
+                        if (angular.isObject(column) && column.hasOwnProperty('class')) {
+                            let className = column.class;
+                            let actionHtml = eval(className).$instance;
                             columnOption = DTColumnBuilder.newColumn(null, 'Action').notSortable().renderWith(actionHtml);
                         } else {
                             var fieldName = column.name;
