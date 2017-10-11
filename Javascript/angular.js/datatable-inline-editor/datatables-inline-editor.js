@@ -168,7 +168,7 @@
                         var itemKey = GetHiddenIdKey(full['_id']);
                         var editingItemName = settingName + '.editingItems[\'' + itemKey + '\']';
                         if (full.edit) {
-                            html = '<md-input-container ' + 'ng-class="{\'md-input-invalid\':' + editingItemName + '.$errors.' + name + '}">' + '<label>' + title + '</label>' + '<input' + isRequired + ' name="' + name + '" ng-model="' + editingItemName + '.' + name + '"' + (columnOptions.uiMask ? ' ui-mask="' + columnOptions.uiMask + '" ui-options="{addDefaultPlaceholder: false}" model-view-value = "true" ' : '') + '>' + '<div ng-messages="' + editingItemName + '.errors">' + '<div ng-message="' + name + '">' + '{{ ' + editingItemName + '.errors._messages.' + name + ' }}</div>' + '</div>' + '</md-input-container>';
+                            html = '<div ' + 'ng-class="{\'md-input-invalid\':' + editingItemName + '.$errors.' + name + '}">' + '<input' + isRequired + ' name="' + name + '" ng-model="' + editingItemName + '.' + name + '"' + (columnOptions.uiMask ? ' ui-mask="' + columnOptions.uiMask + '" ui-options="{addDefaultPlaceholder: false}" model-view-value = "true" ' : '') + '>' + '<div ng-messages="' + editingItemName + '.errors">' + '<div ng-message="' + name + '">' + '{{ ' + editingItemName + '.errors._messages.' + name + ' }}</div>' + '</div>';
                         } else {
                             html = displayCallback ? displayCallback(data, type, full, meta) : full[name];
                         }
@@ -311,10 +311,6 @@
                             callback(editor, settings);
                         }
                         editor.afterInitCallbacks = [];
-                        angular.element(".dataTables_filter").find('input').attr('placeholder', 'Search');
-                        angular.element(".dataTables_filter").find('input').attr('ng-model', 'search');
-                        $compile(angular.element(".dataTables_filter").find('input'))($scope);
-                        angular.element(".dataTables_filter").prepend($compile('<md-icon class="searchIcon" md-svg-src="actions:search"></md-icon>')($scope));
                     }, 50);
                 });
                 $element.on('xhr.dt', function (e, dtSettings, json, xhr) {
@@ -373,13 +369,9 @@
                             editor.sendingItems[itemKey] = false;
                             getDtInstance().reloadData(function (json) {
                                 getDataTable().page('last').draw('page');
-                                $(getDataTable().context[0].nTable).find("#" + itemKey).addClass("backgroundAnimated");
-                                setTimeout(function () {
-                                    $("tr").removeClass("backgroundAnimated");
-                                }, 5000);
                             }, false);
                             if (settings.showAlertAfterChange) {
-								editor.sendingItems[itemKey] = true;
+								                editor.sendingItems[itemKey] = true;
                                 console.log(settings.ItemName + ' ' + getDataTitle(data) + ' was saved. ');
                             }
                             delete editor.editingItems[itemKey];
@@ -391,9 +383,8 @@
                             var e = reason.data;
                             var status = reason.status;
                             editor.sendingItems[itemKey] = false;
-                            handleUnauthorized(status);
                             editor.editingItems[itemKey].edit = true;
-                            editor.editingItems[itemKey].errors = errorManager(e, status);
+                            editor.editingItems[itemKey].errors = e;
                         });
                     } else {
                         // update
@@ -401,16 +392,11 @@
                             var res = result.data;
                             var status = result.status;
                             editor.sendingItems[itemKey] = false;
-                            $element.find("#" + row).removeClass("rowSelect");
                             data.edit = false;
                             data.UpdatedOn = new Date().toISOString();
                             getDataTableRow(row).data(data).draw('page');
                             getDtInstance().reloadData(function (json) {
                                 getDataTable().page('last').draw('page');
-                                $(getDataTable().context[0].nTable).find("#" + itemKey).addClass("backgroundAnimated");
-                                setTimeout(function () {
-                                    $("tr").removeClass("backgroundAnimated");
-                                }, 5000);
                             }, false);
 
                             compileRow(row);
@@ -426,8 +412,7 @@
                             var e = reason.data;
                             var status = reason.status;
                             editor.sendingItems[itemKey] = false;
-                            handleUnauthorized(status);
-                            editor.editingItems[itemKey].errors = errorManager(e, status);
+                            editor.editingItems[itemKey].errors = e;
                         });
                     }
                 };
@@ -552,41 +537,20 @@
                     } else {
                         options = DTOptionsBuilder.fromSource(settings.Source).withDataProp(settings.ItemClassName);
                     }
-                    var pageLength = localStorage.getItem(settings.ItemName + '.pageLength');
-                    pageLength = pageLength ? parseInt(pageLength, 10) : 10;
-
-                    $scope.search = localStorage.getItem(settings.ItemName + '.search') || '';
 
                     // only display table element when used in widget and make table height dynamic
                     // https://www.datatables.net/examples/advanced_init/dom_toolbar.html
                     options.withPaginationType('full_numbers')
-                        .withDisplayLength(pageLength)
-                        .withOption('search', {search: $scope.search})
+                        .withDisplayLength(10)
                         .withOption('rowId', '_id')
-                        .withOption('language', {'search': ''})
                         .withOption('createdRow', function (row, data, dataIndex) {
                             $compile(angular.element(row).contents())($scope);
                         });
                     if (settings.isSendAjax) {
                         return options.withOption('lengthMenu', [5, 10, 25, 50, 100]);
                     } else {
-                        return options.withDOM('t')
-                        //.withOption('scrollY', '20vh')
-                        //.withOption('scrollCollapse', true)
-                            .withOption('paging', false);
+                        return options.withDOM('t').withOption('paging', false);
                     }
-                }
-
-                function removeSelectRowClass() {
-                    $element.find("#" + row).removeClass("rowSelect");
-                }
-
-                function firstRowAnimate() {
-                    var firstTr = $element.find("tr:first-child");
-                    firstTr.addClass("backgroundAnimated");
-                    setTimeout(function () {
-                        firstTr.removeClass("backgroundAnimated");
-                    }, 5000);
                 }
 
                 function DatatablesColumnsBuilder(columnSettings) {
@@ -646,37 +610,6 @@
                     }
 
                     return columns;
-                }
-
-                function handleUnauthorized(status) {
-                    if (status === 401) {
-                        window.location = '/auth/logout';
-                    }
-                }
-
-                function errorManager(e, status) {
-                    var messages = {
-                        _messages: {}
-                    };
-                    if (status == 422) {
-                        for (var key in e) {
-                            if (e.hasOwnProperty(key)) {
-                                messages[key] = true;
-                                messages._messages[key] = e[key][0];
-                            }
-                        }
-                    } else {
-                        if (e.errors) {
-                            if (e.errors.messages) {
-                                messages = e.errors.messages;
-                                console.log(messages);
-                            }
-                            if (e.errors.Message) {
-                                console.log(e.errors.Message);
-                            }
-                        }
-                    }
-                    return messages;
                 }
 
                 function getDataTitle(data) {
@@ -814,8 +747,6 @@
                             editor.editingItems[GetHiddenIdKey(emptyItem._id)] = emptyItem;
                             settings.adding = true;
                             getDataTable().row.add(editor.editingItems[GetHiddenIdKey(emptyItem._id)]).order([0, 'desc']).draw();
-                            $("#applications").animate({scrollTop: 0});
-                            $element.find("tbody>tr:nth-child(1)").addClass("rowSelect");
                         },
                         draw            : function draw(type) {
                             var table = getDataTable();

@@ -1,11 +1,9 @@
 <html lang="en" >
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
-  <link rel="stylesheet" href="libs/datatables/media/css/jquery.dataTables.css">
-  <link rel="stylesheet" href="libs/angular-datatables/dist/css/angular-datatables.min.css">
-  
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Angular Material style sheet -->
+<link rel="stylesheet" href="libs/datatables/media/css/jquery.dataTables.css">
+<link rel="stylesheet" href="libs/angular-datatables/dist/css/angular-datatables.min.css">
 </head>
 <style>
   body {
@@ -15,7 +13,7 @@
 <body ng-app="BlankApp" ng-cloak>
   <!--
     Your HTML content here
-  
+
   <table datatable="" class="row-border hover">
     <thead>
     <tr>
@@ -44,112 +42,98 @@
   </table>
   -->
 
+<div id="rolesMainList" flex ng-controller="RoleEditorController">
+  <div layout="column">
+    <div class="pageTitle">
+      Person Roles
+    </div>
+  </div>
+  <div flex>
+    <div class="addBtn">
+      <button class="btn btn-default addRole"
+        value="Add Role"
+        ng-click="datatablesInlineEditor.addItem()"
+        >
+        Add
+      </button>
+    </div>
+  </div>
+  <div class="mainTable" flex>
+    <table class="table table-striped table-bordered datatable table-hover"
+      datatables-inline-editor="datatablesInlineEditor">
+    </table>
+  </div>
+</div>
 
-       <div id="rolesMainList" flex ng-controller="RoleEditorController">
-            <div layout="column">
-                <div class="pageTitle">
-                    Person Roles
-                </div>
-            </div>
-            <div flex>
-                <div class="addBtn">
-                    <button class="btn btn-default addRole"
-                               value="Add Role"
-                               ng-click="datatablesInlineEditor.addItem()"
-                               >
-                        Add
-                    </button>
-                </div>
-            </div>
-            <div class="mainTable" flex>
-                <table class="table table-striped table-bordered datatable table-hover"
-                       datatables-inline-editor="datatablesInlineEditor">
-                </table>
-            </div>
-        </div>
-  
-  <script src="libs/jquery/dist/jquery.min.js"></script>
+<script src="libs/jquery/dist/jquery.min.js"></script>
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="libs/angular/angular.min.js"></script>
+<script src="libs/angular/angular-animate.min.js"></script>
+<script src="libs/angular/angular-aria.min.js"></script>
+<script src="libs/angular/angular-messages.min.js"></script>
 
+<script src="libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="libs/angular-datatables/dist/angular-datatables.min.js"></script>
 
-  <!-- Angular Material requires Angular.js Libraries -->
-  <script src="libs/angular/angular.min.js"></script>
-  <script src="libs/angular/angular-animate.min.js"></script>
-  <script src="libs/angular/angular-aria.min.js"></script>
-  <script src="libs/angular/angular-messages.min.js"></script>
+<!-- 自定义Column -->
+<script src="libs/Column/ActionColumn.js"></script>
 
-  <script src="libs/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="libs/angular-datatables/dist/angular-datatables.min.js"></script>
+<!-- Your application bootstrap  -->
+<script type="text/javascript">
+let app = angular.module('BlankApp', ['datatables']);
+</script>
+<script src="datatables-inline-editor.js"></script>
+<script>
+app.controller('RoleEditorController', function($scope, $q, $http) {
+  $scope.datatablesInlineEditor = {
+      Promise       : function () {
+        var defer = $q.defer();
+        $http.get('data.json').then(function(result) {
+          defer.resolve(result.data);
+        });
+        return defer.promise;
+      },
+      PrimaryKeyName: 'RoleId',       // The primary key name of each data item
+      ItemClassName : null,           // Which property containing data array in the result from the source.
+      ItemName      : 'Role',         // Just a name to display
+      EmptyItem     : {               // Used for add new item.
+        RoleId     : 0,
+        Title      : '',
+        Description: '',
+      },
+      DataFactory   : {                          // A proxy to the actual data factory function.
+        create: function (data) {
+           // return RoleData.createRole(data);
+        },
+        update: function (data, id) {
+          //  return RoleData.editRole(data, id);
+        },
+        remove: function (id) {
+          //  return RoleData.deleteRole(id);
+        }
+      },
+      Columns       : [                  // Define the datatables columns.
+        {
+            name   : 'RoleId',
+            title  : 'ID',
+            editing: null              // Just display the value. No filter no editor.
 
-  <!-- 自定义Column -->
-  <script src="libs/Column/ActionColumn.js"></script>
-
-  <!-- Your application bootstrap  -->
-  <script type="text/javascript">    
-    /**
-     * You must include the dependency on 'ngMaterial' 
-     */
-    let app = angular.module('BlankApp', ['datatables']);
-  </script>
-  <script src="datatables-inline-editor.js"></script>
-
-
-  <script>
-  app.controller('RoleEditorController', function($scope, $q) {
-
-        $scope.datatablesInlineEditor = {
-            Promise       : function () {
-              var defer = $q.defer();
-                //return RoleData.getAllRoles();
-              defer.resolve([{"RoleId":1,"Title":"System Administrator","Description":"Education Dynamics, Inc.  Administration of the StudentTrac System","DeletedOn":null,"DeletedBy":null},{"RoleId":2,"Title":"Student","Description":"The main role who we track data for.","DeletedOn":null,"DeletedBy":null},{"RoleId":3,"Title":"Guardian","Description":"The parent or guardian of the main role","DeletedOn":null,"DeletedBy":null},{"RoleId":4,"Title":"Teacher","Description":"The instructor who give instruction to the main role","DeletedOn":null,"DeletedBy":null},{"RoleId":5,"Title":"Support Staff","Description":"Any staff Member who is not acting as a teacher","DeletedOn":null,"DeletedBy":null},{"RoleId":6,"Title":"Auditor","Description":"Quality Assurance for the school and can modify records beyond the current month","DeletedOn":null,"DeletedBy":null},{"RoleId":7,"Title":"Curriculum","Description":"Administrators of Curriculum Assets (Assessments, Courses and Guides)","DeletedOn":null,"DeletedBy":null},{"RoleId":8,"Title":"Client Administrator","Description":"Top Level Administrator which has access to all things for a client","DeletedOn":null,"DeletedBy":null}]);
-              return defer.promise;
-            },
-            PrimaryKeyName: 'RoleId',       // The primary key name of each data item
-            ItemClassName : null,           // Which property containing data array in the result from the source.
-            ItemName      : 'Role',         // Just a name to display
-            EmptyItem     : {               // Used for add new item.
-                RoleId     : 0,
-                Title      : '',
-                Description: '',
-                CreatedOn  : $scope.date,
-                UpdatedOn  : $scope.date
-            },
-            DataFactory   : {                          // A proxy to the actual data factory function.
-                create: function (data) {
-                   // return RoleData.createRole(data);
-                },
-                update: function (data, id) {
-                  //  return RoleData.editRole(data, id);
-                },
-                remove: function (id) {
-                  //  return RoleData.deleteRole(id);
-                }
-            },
-            Columns       : [                  // Define the datatables columns.
-                {
-                    name   : 'RoleId',
-                    title  : 'ID',
-                    editing: null              // Just display the value. No filter no editor.
-
-                },
-                {
-                    name   : 'Title',
-                    title  : 'Title',
-                    editing: 'text'            // Text inline editor
-                },
-                {
-                    name   : 'Description',
-                    title  : 'Description',
-                    editing: 'text'
-                },
-                'action',
-                // {class: 'Column/ActionColumn', template: ['view', 'update', 'delete']},
-            ]
-        };
-  });
-
-
-
-
-  </script>
+        },
+        {
+            name   : 'Title',
+            title  : 'Title',
+            editing: 'text'            // Text inline editor
+        },
+        {
+            name   : 'Description',
+            title  : 'Description',
+            editing: 'text'
+        },
+        'action',
+        // {class: 'Column/ActionColumn', template: ['view', 'update', 'delete']},
+      ]
+  };
+});
+</script>
 </body>
 </html>

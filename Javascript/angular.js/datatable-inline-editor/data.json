@@ -1,0 +1,58 @@
+[
+    {
+        "RoleId": 1,
+        "Title": "System Administrator",
+        "Description": "Education Dynamics, Inc.  Administration of the StudentTrac System",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 2,
+        "Title": "Student",
+        "Description": "The main role who we track data for.",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 3,
+        "Title": "Guardian",
+        "Description": "The parent or guardian of the main role",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 4,
+        "Title": "Teacher",
+        "Description": "The instructor who give instruction to the main role",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 5,
+        "Title": "Support Staff",
+        "Description": "Any staff Member who is not acting as a teacher",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 6,
+        "Title": "Auditor",
+        "Description": "Quality Assurance for the school and can modify records beyond the current month",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 7,
+        "Title": "Curriculum",
+        "Description": "Administrators of Curriculum Assets (Assessments, Courses and Guides)",
+        "DeletedOn": null,
+        "DeletedBy": null
+    },
+    {
+        "RoleId": 8,
+        "Title": "Client Administrator",
+        "Description": "Top Level Administrator which has access to all things for a client",
+        "DeletedOn": null,
+        "DeletedBy": null
+    }
+]
