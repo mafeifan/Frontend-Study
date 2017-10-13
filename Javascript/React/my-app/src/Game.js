@@ -25,11 +25,15 @@ class Game extends React.Component {
   constructor() {
     super();
     this.state = {
-      history: [{
-        squares: Array(9).fill(null)
-      }],
+      history: [
+        {
+          squares: Array(9).fill(null),
+          lastStep: "Game start"
+        }
+      ],
+      xIsNext: true,
       stepNumber: 0,
-      xIsNext: true
+      sort: false
     };
   }
 
@@ -48,24 +52,42 @@ class Game extends React.Component {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    const desc = squares[i] + ' moved to ';
     this.setState({
       history: history.concat([{
-        squares: squares
+        squares: squares,
+        lastStep: desc
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
     });
   }
 
+  toggleSort() {
+    this.setState({
+      sort: !this.state.sort
+    });
+  }
+
   render() {
-    const history = this.state.history;
+    let history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
+    let status;
+    if (winner) {
+      status = 'Winner: ' + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
+
+    if (this.state.sort) {
+      history = this.state.history.slice();
+      history.reverse();
+    }
+
     const moves = history.map((step, move) => {
-      const desc = move ?
-        'Move #' + move :
-        'Game start';
+      const desc = step.lastStep;
       return (
         <li key={move}>
           <a href="#"
@@ -75,13 +97,6 @@ class Game extends React.Component {
         </li>
       );
     });
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
 
     return (
       <div className="game">
@@ -93,6 +108,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
+          <button onClick={() => this.toggleSort()}>Sort</button>
           <ol>{moves}</ol>
         </div>
       </div>
