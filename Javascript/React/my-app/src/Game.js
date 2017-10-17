@@ -28,7 +28,7 @@ class Game extends React.Component {
       history: [
         {
           squares: Array(9).fill(null),
-          lastStep: "Game start"
+          lastStep: 'Game start'
         }
       ],
       xIsNext: true,
