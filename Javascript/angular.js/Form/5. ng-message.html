@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ng-form</title>
+  </head>
+  <body>
+
+  <div ng-controller="TestCtrl">
+    <form name="myForm">
+      <label>
+        Enter text:
+        <input type="email" ng-model="field"
+        name="myField" required
+        maxlength="15"
+        ng-pattern="/^[^,]+$/"
+        />
+      </label>
+      <div ng-messages="myForm.myField.$error" role="alert">
+        <div ng-message="required">Please enter a value for this field.</div>
+        <div ng-message="pattern">xxx.</div>
+        <div ng-message="email">This field must be a valid email address.</div>
+        <div ng-message="maxlength">This field can be at most 15 characters long.</div>
+      </div>
+    </form>
+  </div>
+
+
+  </body>
+</html>
+<script src="../angular.js"></script>
+<script src="../angular-messages.js"></script>
+
+<script>
+
+angular.module('myApp', ['ngMessages'])
+.controller('TestCtrl', function($scope){
+  $scope.commaRestriction = /^[^,]+$/;
+  $scope.formData = {};
+
+})
+</script>
+
+
+
+
+</body>
+</html>
+
