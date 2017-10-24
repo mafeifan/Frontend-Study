@@ -1,0 +1,17 @@
+{
+  "name": "koa-router",
+  "version": "1.0.0",
+  "description": "使用koa+koa-router模拟后台api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mock": "node ./mock/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1"
+  }
+}
