@@ -51,8 +51,8 @@ export default class ToDoList extends React.Component {
     super(props);
     this.state = {
       items: [
-        { text: 'learn AngularJS', done: true },
-        { text: 'build an AngularJS app', done: false }
+        { text: 'learn React', done: true },
+        { text: 'build a React app', done: false }
       ]
     };
     this.calRemaining();
