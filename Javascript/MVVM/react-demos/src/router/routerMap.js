@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Game   from '../Game/Game'
 import ToDoList   from '../ToDoList'
 import ReactChildren   from '../Demos/ReactChildren'
+import ControlPanel   from '../ControlPanel'
 import NoMatch from './404'
 
 export class RouterMap extends React.Component {
@@ -19,7 +20,9 @@ export class RouterMap extends React.Component {
           <Switch>
             <Route exact path="/" component={Game} />
             <Route exact path="/todolist" component={ToDoList} />
+            <Route exact path="/controlPanel" component={ControlPanel} />
             <Route exact path="/demos/ReactChildren" component={ReactChildren} />
+
             <Route component={NoMatch}/>
           </Switch>
         </div>
