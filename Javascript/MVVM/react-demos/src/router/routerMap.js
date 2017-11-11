@@ -2,8 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Game   from '../Game/Game'
 import ToDoList   from '../ToDoList'
-import ReactChildren   from '../Demos/ReactChildren'
-import ControlPanel   from '../ControlPanel'
+import ReactChildren from '../Demos/ReactChildren'
+import Input from '../ANTD/Input/demo'
+import ControlPanel from '../ControlPanel'
 import NoMatch from './404'
 
 export class RouterMap extends React.Component {
@@ -22,7 +23,7 @@ export class RouterMap extends React.Component {
             <Route exact path="/todolist" component={ToDoList} />
             <Route exact path="/controlPanel" component={ControlPanel} />
             <Route exact path="/demos/ReactChildren" component={ReactChildren} />
-
+            <Route exact path="/demos/Input" component={Input} />
             <Route component={NoMatch}/>
           </Switch>
         </div>
