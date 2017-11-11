@@ -17,7 +17,7 @@ export class RouterMap extends React.Component {
             <li><Link to="/todolist">ToDoList</Link></li>
             <li><Link to="/demos/ReactChildren">Demos</Link></li>
           </ul>
-          <hr/>
+          <hr style={{margin: '20px'}}/>
           <Switch>
             <Route exact path="/" component={Game} />
             <Route exact path="/todolist" component={ToDoList} />
