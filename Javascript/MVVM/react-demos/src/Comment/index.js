@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './comment.css';
 
 export default class CommentApp extends React.Component {
   constructor() {
