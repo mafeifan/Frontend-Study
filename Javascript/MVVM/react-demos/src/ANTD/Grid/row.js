@@ -1,6 +1,8 @@
-import React, { Children, Component, cloneElement} from 'react';
+import React, { Children, cloneElement} from 'react';
 import classNames from 'classnames';
 import omit from 'omit.js';
+
+// Row的gutter属性用来确定包含的每个col之间的间隙
 
 export default class Row extends React.Component {
   static defaultProps = {
@@ -34,7 +36,7 @@ export default class Row extends React.Component {
       if (!col) {
         return null;
       }
-      if (cols.props && gutter > 0) {
+      if (col.props && gutter > 0) {
         return cloneElement(col, {
           style: {
             paddingLeft: gutter / 2,

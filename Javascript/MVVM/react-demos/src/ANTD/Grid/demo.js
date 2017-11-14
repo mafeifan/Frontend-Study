@@ -1,10 +1,9 @@
 import React from 'react'
-import Col from './Col'
-import Row from './Row'
+import {Row, Col} from './index'
 
 export default () => {
   return (<div>
-    <Row>
+    <Row gutter={16}>
       <Col span={12}>col-12</Col>
       <Col span={12}>col-12</Col>
     </Row>
