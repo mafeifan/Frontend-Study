@@ -6,9 +6,11 @@ import ReactChildren from '../Demos/ReactChildren'
 import ControlPanel from '../ControlPanel'
 import NoMatch from './404'
 
-
+// 总演示入口
+import ANTD from '../ANTD/index'
+// 各个组件的演示
 import Input from '../ANTD/Input/demo'
-import Grid from '../ANTD/Grid/demo'
+import Grid from '../ANTD/grid/demo'
 
 
 export class RouterMap extends React.Component {
@@ -27,8 +29,11 @@ export class RouterMap extends React.Component {
             <Route exact path="/todolist" component={ToDoList} />
             <Route exact path="/controlPanel" component={ControlPanel} />
             <Route exact path="/demos/ReactChildren" component={ReactChildren} />
+
+            <Route exact path="/demos/ANTD" component={ANTD} />
             <Route exact path="/demos/Input" component={Input} />
             <Route exact path="/demos/Grid" component={Grid} />
+
             <Route component={NoMatch}/>
           </Switch>
         </div>
