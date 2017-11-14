@@ -9,7 +9,7 @@ import NoMatch from './404'
 // 总演示入口
 import ANTD from '../ANTD/index'
 // 各个组件的演示
-import Input from '../ANTD/Input/demo'
+import Input from '../ANTD/input/demo'
 import Grid from '../ANTD/grid/demo'
 
 

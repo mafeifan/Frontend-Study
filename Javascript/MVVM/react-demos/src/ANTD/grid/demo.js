@@ -1,8 +1,6 @@
 import React from 'react'
 import {Row, Col} from './index'
 
-import Breadcrumb from '../breadcrumb/index';
-
 export default () => {
   return (<div>
     <Row gutter={16}>
