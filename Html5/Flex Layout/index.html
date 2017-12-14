@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>flex-grow</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+  <!-- 使用 flex 布局首先要设置父容器 display: flex -->
+<body ng-controller="demoController">
+  <div id="main">
+    <div class="item1" style="background-color:coral;">红色</div>
+    <div class="item2" style="background-color:lightblue;">蓝色</div>
+    <div class="item3" style="background-color:lightgreen;">绿色</div>
+  </div>
+  <div id="controllPanel">
+    <div class="item">
+      <h3>align items</h3>
+      <label><input type="radio" name="align" value="flex-start"  ng-model="alignItems" ng-change="change('alignItems')"> flex-start </label><br/>
+      <label><input type="radio" name="align" value="center"      ng-model="alignItems" ng-change="change('alignItems')"> center </label><br/>
+      <label><input type="radio" name="align" value="flex-end"    ng-model="alignItems" ng-change="change('alignItems')"> flex-end </label><br/>
+      <label><input type="radio" name="align" value="stretch"     ng-model="alignItems" ng-change="change('alignItems')"> stretch (默认) </label><br/>
+    </div>
+    <div class="item">
+      <h3>flex-wrap 换行方式</h3>
+      <label><input type="radio" name="wrap" value="nowrap"  ng-model="flexWrap" ng-change="change('wrap')"> nowrap </label><br/>
+      <label><input type="radio" name="wrap" value="wrap"      ng-model="flexWrap" ng-change="change('wrap')"> wrap </label><br/>
+      <label><input type="radio" name="wrap" value="wrap-reverse"    ng-model="flexWrap" ng-change="change('wrap')"> wrap-reverse </label><br/>
+    </div>
+  </div>
+</body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.js'></script>
+<script  src="js/index.js"></script>
+</body>
+</html>

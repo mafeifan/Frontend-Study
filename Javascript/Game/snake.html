@@ -1,0 +1,509 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>贪食蛇</title>
+    <style type='text/css'>
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .snake {
+            border: 1px solid #000;
+            margin: 0 auto;
+            display: block;
+        }
+
+            .snake div {
+                width: 10px;
+                height: 10px;
+                float: left;
+            }
+
+                .snake div.point {
+                    background: #000;
+                }
+
+                .snake div.food {
+                    background: blue;
+                }
+
+        .tool {
+            width: 300px;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .msg {
+            width: 300px;
+            margin: 0 auto;
+            border: 1px solid #000;
+            padding: 5px 0;
+            font-size: 12px;
+            text-align: center;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas class='snake' id='snake' width="300" height="400"></canvas>
+    <div class='msg'>
+        分数：<span id='score'>0</span>
+
+
+
+        级别：<span id='level'>1</span>
+    </div>
+    <div class='tool'>
+        <input type='button' value='点击开始' id="start_btn" />
+        <input type='button' value='新游戏' id="new_game_btn" />
+    </div>
+
+    <script type='text/javascript'>
+
+    var TRANSVERSE = 30;
+    var VERTICAL = 40;
+
+    var LEFT = 1;
+    var RIGHT = 2;
+    var TOP  = 3;
+    var BOTTOM = 4;
+
+    var GAME_START = 1;
+    var GAME_STOP = 2;
+    var GAME_OVER = 3
+
+
+    //组成蛇的节点，一个链表结构
+    var SnakeNode = function(point) {
+        var prevDirection, currDirection,
+     	    next,
+		    pos = point;
+
+	    //获得下一个
+	    this.getNext = function() {
+	        return next;
+	    }
+
+	    //设置下一个
+	    this.setNext = function(el) {
+	        next = el;
+	    }
+
+	    //设置方向
+	    this.setDirection = function(value) {
+	        currDirection = value;
+	    }
+
+	    //获得方向
+	    this.getDirection = function() {
+	        return currDirection;
+	    }
+
+	    //计算结点下一个位置
+	    this.computePosition = function() {
+	        pos = SnakeNode.getNextPoint( pos, currDirection );
+		    if( next ) {
+		        next.computePosition();
+		    }
+		    if( prevDirection != currDirection ) {
+			    prevDirection = currDirection;
+			    if( next ){
+			        next.setDirection(currDirection);
+			    } 
+		    }
+	    }
+
+	    //获得位置
+	    this.getPosition = function(){
+	        return pos;
+	    }
+    }
+
+    //通过方向计算相对与当前位置的下一个位置
+    SnakeNode.getNextPoint = function (point, direction)
+    {
+		    var newPoint = {};
+		    switch(direction)
+		    {
+		        case LEFT:
+			        newPoint.x = point.x - 1;
+				    newPoint.y = point.y ;
+				    break;
+			    case RIGHT:
+			        newPoint.x = point.x + 1;
+				    newPoint.y = point.y;
+				    break;
+			    case TOP:
+			        newPoint.x = point.x;
+				    newPoint.y = point.y - 1;
+				    break;
+			    case BOTTOM:
+			        newPoint.x = point.x;
+				    newPoint.y = point.y + 1;
+			        break;
+		    }
+		    return newPoint;
+    }
+
+    //蛇
+    var Snake = function( head ) {
+        var snake = head;
+        var isGameover = false;
+	    var self = this;
+
+	    //为蛇增加一个节点
+	    this.addNode = function() {
+		    var lastNode =  getLastNode();
+		    var point = lastNode.getPosition();
+		    var reverse;
+		    switch(lastNode.getDirection()) {
+		        case LEFT:
+			        reverse = RIGHT;
+				    break;
+			    case RIGHT:
+			        reverse = LEFT;
+				    break;
+			    case TOP:
+			        reverse = BOTTOM;
+				    break;
+			    case BOTTOM:
+			        reverse = TOP;
+			        break;
+		    }
+		    var newPoint = SnakeNode.getNextPoint(point, reverse);
+		    var node = new SnakeNode(newPoint);
+		    node.setDirection(lastNode.getDirection());
+		    lastNode.setNext(node);
+	    }
+
+	    //获所所有蛇节点的位置
+	    this.getAllNodePos = function() {
+	        var posList = new Array;
+		    var node = snake;
+		    do{
+		        posList.push(node.getPosition());
+			    node = node.getNext();
+		    }while(node);
+		    return posList;
+	    }
+
+	    //获得蛇长度
+	    this.getLength = function() {
+	        var count = 0;
+		    var node = snake;
+		    while(node) {
+		        count ++;
+			    node = node.getNext();
+		    }
+		    return count;
+	    }
+
+	    //游戏是否结束
+	    this.isGameover = function() {
+	        return isGameover;
+	    }
+	    //移动
+	    this.move = function() {
+	        if (!isGameover) {
+	            snake.computePosition();
+	        }
+	        checkGameover();
+	    }
+	    //根据方向导航
+	    this.setDirection = function (direction) {
+	        if( !isGameover ) snake.setDirection(direction);
+	    }
+	    //获得蛇头位置
+	    this.getHeadPos = function() {
+	        return snake.getPosition();
+	    }
+	    //获得蛇头方向
+	    this.getHeadDirection = function() {
+	        return snake.getDirection();
+	    }
+	    var checkGameover = function() {
+	        var l = snake.getPosition();
+		    var cl = self.getAllNodePos();
+		    if(l.x < 0 || l.x >= TRANSVERSE || l.y < 0 || l.y >= VERTICAL ) {
+		        isGameover = true;
+			    return;
+		    }
+		    for(var i = 0 ; i < cl.length ; i ++) {
+		       if(l != cl[i] && cl[i].x == l.x && cl[i].y == l.y) {
+		           isGameover = true;
+			       return;
+		       }
+		    }
+	    }
+
+	    var getLastNode = function() {
+	        var node = snake.getNext();
+		    while( node ){
+		        var nextNode = node.getNext();
+			    if(!nextNode) return node;
+			    node = nextNode;
+		    }
+		    return snake;
+	    }
+    }
+
+    //贪食蛇游戏
+    var SnakeGame = function() {
+        var snake ;
+	    var moveTimer, randomTimer;
+        var currDirection;
+	    var foods = [];
+	    var status = GAME_STOP;
+	    var context;
+
+	    var self = this;
+
+	    this.onEatOne = function(){};
+
+	    var getRandom = function(notin) {
+	        var avaiable = [];
+		    for(var y = 0 ; y < VERTICAL ; y ++)
+		    {
+		         for(var x = 0 ; x < TRANSVERSE; x++ ) {
+				     var j = 0;
+				     var avaiableFlag = true;
+				     while( j < notin.length ){
+					     var el = notin[j];
+					     if( el.x == x && el.y == y ) {
+						    notin.splice(j,1);
+						    avaiableFlag = false;
+						    break;
+					     }
+					     j++;
+				     }
+				     if(avaiableFlag) avaiable.push({ x: x , y: y });
+			     }
+		    }
+		    var rand = Math.floor(Math.random() * avaiable.length);
+		    return avaiable[rand];
+	    }
+
+	    //导航
+	    var navigate = function(direction) {
+	        var sd = snake.getHeadDirection();
+		    var d ;
+		    if((sd == LEFT || sd == RIGHT) && (direction == TOP || direction == BOTTOM)) d = direction;
+		    if((sd == TOP || sd == BOTTOM) && (direction == LEFT || direction == RIGHT)) d = direction;
+		    if(d) currDirection = d;
+	    }
+
+
+	    var move = function() {
+	        moveTimer = window.setTimeout( move, computeMoveInterval() );
+		    if(currDirection) snake.setDirection( currDirection );
+	        snake.move();
+		    var lc = snake.getHeadPos();
+	        for(var i = 0 ; i < foods.length ; i ++) {
+		        if(lc.x == foods[i].x && lc.y == foods[i].y) {
+				    snake.addNode();
+				    self.onEatOne();
+                    foods.splice( i, 1 );
+                    break;
+			    }
+		    }
+		    if(snake.isGameover()){
+		        gameover();
+			    return;
+		    }
+		    draw();
+	    }
+
+	    var createFood = function() {
+	        var notin = snake.getAllNodePos().concat(foods);
+	        var rand = getRandom(notin);
+		    foods.push(rand);
+	    }
+
+	    var arrayToMap = function(array) {
+		    var map = {};
+		    for(var i = 0 , point ;  point = array[i++];) map[[point.x , point.y]] = null;
+		    return map;
+	    }
+
+	    //获得当前游戏数据结构
+	    var getMap = function() {
+	        var board = new Array;
+	        for (var y = 0 ; y < VERTICAL; y++) {
+	            for (var x = 0 ; x < TRANSVERSE ; x++) {
+	                board.push({ x: x, y: y });
+	            }
+	        }
+		    var cl = snake.getAllNodePos();
+		    var food = arrayToMap(foods);
+		    cl = arrayToMap(cl);
+		    board = arrayToMap(board);
+		    for(var key in cl) board[key] = 'snake';
+		    for(var key in food) board[key] = 'food';
+		    return board;
+	    }
+
+	    //获得分数
+	    this.getScore = function() {
+	       return snake.getLength() - 1;
+	    }
+
+	    //获得级别
+	    this.getLevel = function() {
+	        var score = self.getScore();
+		    var level = 0;
+		    if(score <= 5) level = 1;
+            else if(score <= 12) level = 2;
+            else if(score <= 22) level = 3;
+            else if(score <= 35) level = 4;
+            else if(score <= 50) level = 5;
+            else if(score <= 75) level = 6;
+		    else if(score <= 90) level = 7;
+		    else if(score <= 100) level = 8;
+		    else level = 9;
+            return level;
+	    }
+
+	    var computeMoveInterval = function() {
+	        var speed = {
+		        '1':200,
+			    '2':160,
+			    '3':120,
+			    '4':100,
+			    '5':80,
+			    '6':60,
+		        '7':40,
+			    '8':20,
+			    '9':10
+		    }
+	        var level = self.getLevel();
+		    return speed[level];
+	    }
+
+	    var gameover = function () {
+	        status = GAME_OVER;
+	        window.clearTimeout(moveTimer);
+	        window.clearInterval(foodTimer);
+	        unBindEvent();
+	        alert('游戏结束');
+	    }
+
+        //获得游戏状态
+	    this.gameState = function () {
+	        return status;
+	    }
+
+	    //游戏开始
+	    this.start = function() {
+	        status = GAME_START;
+	        moveTimer = window.setTimeout(move , computeMoveInterval());
+	        foodTimer = window.setInterval(createFood, 5000);
+	        bindEvent();
+	    }
+
+	    //暂停游戏
+	    this.stop = function() {
+	        status = GAME_STOP;
+	        window.clearTimeout(moveTimer);
+		    window.clearInterval(foodTimer);
+		    unBindEvent();
+	    }
+
+	    this.initialize = function( canvasId ) {
+	        var head = new SnakeNode({ x: Math.ceil(TRANSVERSE / 2), y: Math.ceil(VERTICAL / 2) });
+		    head.setDirection([LEFT, RIGHT , TOP , BOTTOM][Math.floor(Math.random() * 4)])
+		    snake = new Snake(head);
+
+		    var canvas = document.getElementById(canvasId);
+		    context = canvas.getContext('2d');
+	    }
+
+        //画界面
+	    var draw = function () {
+	        context.fillStyle = '#fff';
+	        context.fillRect(0, 0, 300, 400);
+	        var map = getMap();
+	        for (var key in map) {
+	            var pointType = map[key];
+	            var x = key.split(',')[0];
+	            var y = key.split(',')[1];
+
+	            if (pointType == 'snake') {
+	                context.fillStyle = '#000';
+	            } else if (pointType == 'food') {
+	                context.fillStyle = '#f00';
+	            } else {
+	                continue;
+	            }
+	            context.fillRect( x * 10, y * 10, 10, 10 );
+	        }
+	    }
+
+        //绑定事件
+	    var bindEvent = function () {
+	        document.body.onkeydown = function (e) {
+	            e = e || window.event;
+	            var keyCode = e.keyCode;
+	            switch (keyCode) {
+	                case 37:
+	                    navigate(LEFT);
+	                    break;
+	                case 38:
+	                    navigate(TOP);
+	                    break;
+	                case 39:
+	                    navigate(RIGHT);
+	                    break;
+	                case 40:
+	                    navigate(BOTTOM);
+	                    break;
+	            }
+	        }
+	    }
+
+        //取消绑定
+	    var unBindEvent = function () {
+	        document.body.onkeydown = null;
+	    }
+    }
+
+
+    //初始化游戏
+    var game = new SnakeGame();
+    game.initialize("snake");
+
+    game.onEatOne = function() {
+        document.getElementById('score').innerHTML = game.getScore();
+	    document.getElementById('level').innerHTML = game.getLevel();
+    }
+
+    //开始游戏和暂停游戏切换
+    function toggle(btn)
+    {
+        var state = game.gameState();
+	    if(state == GAME_STOP) {
+	        game.start();
+		    btn.value = '暂停游戏';
+	    }
+	    else if(state == GAME_START) {
+	        game.stop();
+		    btn.value = '点击开始';
+	    } else {
+	        alert('游戏已结束');
+	    }
+    }
+
+    document.getElementById("start_btn").onclick = function () {
+        toggle(this);
+    }
+
+    document.getElementById("new_game_btn").onclick = function () {
+        window.location.reload();
+    }
+
+</script>
+
+</body>
+</html>
