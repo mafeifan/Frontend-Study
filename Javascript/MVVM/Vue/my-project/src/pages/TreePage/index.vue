@@ -1,7 +1,7 @@
 <template>
-  <div class="hello">
+  <div class="myTree">
     <h1>递归组件学习</h1>
-    <ul v-for="item in menuItems">
+    <ul v-for="item in menuItemsData">
       <my-tree :model="item" :key="item.menuCode"></my-tree>
     </ul>
   </div>
@@ -18,7 +18,7 @@ export default {
   },
   data () {
     return {
-      menuItems: treeData
+      menuItemsData: treeData
     }
   }
 }
