@@ -47,15 +47,6 @@ export default {
     background-repeat: no-repeat;
     vertical-align: middle;
   }
-  .icon.folder {
-    /*background-image: url(/src/assets/folder.png);*/
-  }
-  .icon.folder-open {
-    /*background-image: url(/src/assets/folder-open.png);*/
-  }
-  .icon.file-text {
-    /*background-image: url(/src/assets/file-text.png);*/
-  }
   .tree-menu li {
     line-height: 1.5;
   }

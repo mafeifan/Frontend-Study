@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件委托</title>
+</head>
+<body>
+    <p>事件委托的本质是利用JS的事件冒泡特性，比如点击页面上的一个div，在冒泡阶段，相当于依次触发div,body,document的点击事件。请点击下面的box并查看log</p>
+
+  <div id="box" style="width: 50px; height: 50px; border: 1px solid red;">
+    box
+  </div>
+
+  <p>利用此特性将事件都绑定在父元素上，vue里都绑定在document上？比如动态添加的元素ul>li*5，不用给每个li添加事件。只需要绑定在父级比如ul，通过event.target来判断是否是li就可以了。</p>
+
+  <p>参考: <a href="https://www.cnblogs.com/leejersey/p/3801452.html">js中的事件委托
+</a></p>
+<script>
+let $box = document.querySelector('#box')
+$box.addEventListener('click', () => console.log('click box'))
+
+document.body.addEventListener('click', () => console.log('click body'))
+
+document.addEventListener('click', () => console.log('click document'))
+</script>
+
+</body>
+</html>
