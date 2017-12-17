@@ -6,7 +6,7 @@ import '../antd.css'
 export default () => {
 
   return (<div>
-    <Input placeholder="Basic usage" size="small" />
+    <Input placeholder="Basic usage" size="small" onPressEnter={() => alert('hello')}/>
     <br/><br/>
     <Input placeholder="Basic usage" size="small" disabled />
     <br/><br/>
