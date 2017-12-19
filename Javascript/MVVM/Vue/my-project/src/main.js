@@ -4,8 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-
+import jQuery from 'jquery'
 import 'font-awesome/css/font-awesome.css'
+
+// Set jQuery plugin
+window.jQuery = window.jquery = window.$ = jQuery
 
 Vue.config.productionTip = false
 
