@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>event loop</title>
+</head>
+<body>
+
+参考：
+https://juejin.im/post/598c595d6fb9a03c5f0c80e9
+http://www.jianshu.com/p/1ee6c21f6efa
+https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
+<script>
+// 下面的执行顺序是什么呢
+console.log('script start');
+
+setTimeout(function() {
+  console.log('setTimeout');
+}, 0);
+
+Promise.resolve().then(function() {
+  console.log('promise1');
+}).then(function() {
+  console.log('promise2');
+});
+
+console.log('script end');
+</script>
+</body>
+</html>
