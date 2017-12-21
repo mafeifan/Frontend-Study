@@ -4,21 +4,31 @@
   "version": "1.0",
   "manifest_version": 2,
   "browser_action": {
-    "default_popup": "index.html",
+    "default_popup": "popup.html",
     "default_icon": "icon.png"
   },
-  "default_locale": "zh_CN",
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+F",
         "mac": "MacCtrl+Shift+F"
       },
-      "description": "Opens hello.html"
+      "description": "Opens popup.html"
     }
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "lib/jsmediatags.min.js",
+        "content_script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
   "permissions": [
     "activeTab",
-    "http://*/*"
+    "http://*/*",
+    "https://*/*"
   ]
 }
