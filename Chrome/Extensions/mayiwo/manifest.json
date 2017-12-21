@@ -1,6 +1,6 @@
 {
-  "name": "mafengwo mp3",
-  "description" : "抓取下载马蜂窝游记页面的mp3",
+  "name": "grab mp3 in mafengwo website page",
+  "description" : "抓取下载马蜂窝游记页面的mp3歌曲信息",
   "version": "1.0",
   "manifest_version": 2,
   "browser_action": {
@@ -18,10 +18,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": [
+        "http://www.mafengwo.cn/i/*.html"
+      ],
       "js": [
         "lib/jsmediatags.min.js",
-        "content_script.js"
+        "js/content_script.js"
       ],
       "run_at": "document_end"
     }
