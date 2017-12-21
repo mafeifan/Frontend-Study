@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>this隐式丢失</title>
+</head>
+<body>
+<script>
+
+// 实例1 this隐式丢失
+function foo() {
+  console.log( this.a );
+}
+
+var obj = {
+  a: 2,
+  foo: foo
+};
+
+var bar = obj.foo; // 函数别名！
+
+var a = "oops, global"; // a 是全局对象的属性
+
+// 这里显示"oops, global"，因为this指向window
+// 类似的还有 setTimeout()
+bar();
+
+// 实例2 强制绑定
+</script>
+</body>
+</html>

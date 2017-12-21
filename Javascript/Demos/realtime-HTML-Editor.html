@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>实时html编辑器</title>
+  <pre>
+  // 原理比较简单
+  // 页面上有一个textarea和iframe
+  // 页面打开时让textarea处于选中
+  // 开始执行update
+  // 把textarea里面的内容赋给old变量，如果新的内容不等于old，就打开iframe并赋给他，并把新的内容赋给old
+  // 150ms后再次执行update
+  </pre>
+  <script type="text/javascript">
+  var old = '';
+  function update() {
+    var textarea = document.form.targetTextArea;
+    var iframeDoc = parent.dynamicframe.document;
+    if (old != textarea.value) {
+      old = textarea.value;
+      iframeDoc.open();
+      iframeDoc.write(old);
+      iframeDoc.close();
+    }
+    // 递归检测
+    window.setTimeout(update, 150);
+  }
+  </script>
+</head>
+<body onload="update(); document.form.targetTextArea.focus();">
+<form action="" name="form">
+  <textarea id="canvas" name="targetTextArea" rows="10" cols="140">
+  </textarea>
+</form>
+
+<iframe name="dynamicframe" id="dynamicframe" src="javascript:'-'"></iframe>
+
+</body>
+</html>

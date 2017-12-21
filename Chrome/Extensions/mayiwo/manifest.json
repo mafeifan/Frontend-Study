@@ -1,0 +1,23 @@
+{
+  "name": "mafengwo mp3",
+  "description" : "抓取下载马蜂窝游记页面的mp3",
+  "version": "1.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens hello.html"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "http://*/*"
+  ]
+}
