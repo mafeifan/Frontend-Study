@@ -7,6 +7,7 @@
     "default_popup": "index.html",
     "default_icon": "icon.png"
   },
+  "default_locale": "zh_CN",
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
