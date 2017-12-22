@@ -1,16 +1,13 @@
 {
-  "name": "grab mp3 in mafengwo website page",
+  "name": "mafengwo mp3",
   "description" : "抓取下载马蜂窝游记页面的mp3歌曲信息",
   "version": "1.0",
+  "homepage_url": "https://github.com/mafeifan",
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon16.png",
-      "19": "icons/icon19.png",
-      "38": "icons/icon38.png",
-      "48": "icons/icon48.png",
-      "128": "icons/icon128.png"
+      "16":  "icon.png"
     }
   },
   "commands": {
@@ -21,6 +18,11 @@
       },
       "description": "Opens popup.html"
     }
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
   },
   "content_scripts": [
     {
