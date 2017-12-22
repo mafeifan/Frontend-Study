@@ -16,13 +16,24 @@ function formatResult(tags) {
   return arr.join(',')
 }
 
+// 歌曲加载是异步的，所以要等一会儿
 setTimeout(() => {
+  main()
+}, 1500)
+
+function main() {
   let PAGE_MP3_URL = ''
   if (document.querySelector(".hd_audio")) {
     PAGE_MP3_URL = document.querySelector(".hd_audio").getAttribute('data-music')
     jsmediatags.read(PAGE_MP3_URL, {
       onSuccess: function(result) {
         console.log(result);
+        // 发现歌曲，切换图标
+        //
+        chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+          console.log(response.farewell);
+        });
+
         if (result.tags) {
           console.log(formatResult(result.tags))
         }
@@ -35,5 +46,5 @@ setTimeout(() => {
       }
     });
   }
-}, 2000)
+}
 
