@@ -18,7 +18,12 @@ function main() {
     jsmediatags.read(MUSIC_URL, {
       onSuccess: result => {
         if (result.tags) {
-          chrome.runtime.sendMessage({song: result.tags, link: MUSIC_URL}, function(response) {
+          let song = {songInfo: formatResultToString(result.tags), songLink: MUSIC_URL}
+          chrome.storage.sync.set(song, function() {
+            // Notify that we saved.
+            console.log('storage saved');
+          });
+          chrome.runtime.sendMessage(song, function(response) {
             console.log(response);
           });
         }
@@ -35,3 +40,24 @@ function main() {
 }
 
 
+/**
+ * 输出歌曲的基本ID3信息
+ * @param  {[type]} tags [description]
+ * @return string
+ */
+function formatResultToString(tags, link) {
+  let arr = []
+  if (tags.title) {
+    arr.push(`歌曲名：${tags.title}`)
+  }
+  if (tags.artist) {
+    arr.push(`艺术家：${tags.artist}`)
+  }
+  if (tags.album) {
+    arr.push(`专辑：${tags.album}`)
+  }
+  if (tags.genre) {
+    arr.push(`曲风：${tags.genre}`)
+  }
+  return arr.join('-')
+}

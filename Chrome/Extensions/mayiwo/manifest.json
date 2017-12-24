@@ -37,6 +37,7 @@
     }
   ],
   "permissions": [
+    "storage",
     "activeTab",
     "http://*/*",
     "https://*/*"
