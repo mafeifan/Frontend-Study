@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    body {
+      width: 80%;
+    }
+  </style>
+  <link rel="stylesheet" href="../node_modules/datatables.net-dt/css/jquery.dataTables.css">
+</head>
+<body>
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </tfoot>
+</table>
+
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({
+      "processing": true,
+      // 开启服务端处理
+      "serverSide": true,
+      // https://datatables.net/reference/option/ajax
+      "ajax": {
+        url: '../data/data.json',
+        // 添加额外的查询参数
+        data: {
+          user_id: 451
+        }
+      }
+    });
+} );
+</script>
+</body>
+</html>
