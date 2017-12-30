@@ -39,7 +39,9 @@
   "permissions": [
     "storage",
     "activeTab",
-    "http://*/*",
+    "webRequestBlocking",
+    "webRequest",
+    "http://*/*", // 可以通过executeScript或者insertCSS访问的网站
     "https://*/*"
   ]
 }

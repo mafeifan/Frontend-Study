@@ -1,0 +1,23 @@
+{
+  "name": "Chrome webrequest test",
+  "version": "0.1",
+  "description": "A test for webrequest",
+  "manifest_version": 2,
+  "permissions": [
+    "<all_urls>",
+    "webRequest",         // web请求
+    "webRequestBlocking", // 阻塞式web请求
+    "notifications",      // 通知
+    "contextMenus",       // 右键菜单
+    "tabs",               // 访问tabs
+    "http://*/*",         // 可以通过executeScript或者insertCSS访问的网站
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "js/jsmediatags.min.js",
+      "js/background.js"
+    ],
+    "persistent": true
+  }
+}
