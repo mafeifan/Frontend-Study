@@ -2,17 +2,35 @@
 // https://developer.chrome.com/extensions/webRequest
 // 注意：测试的时候关闭翻墙程序
 
+// 匹配歌曲地址
 const MATCH_URL = 'http://mp3file'
+
+function getDownLoadTitle(tags) {
+  let str = ''
+  if (tags.title && tags.artist) {
+    return `${tags.title}-${tags.artist}.mp3`
+  }
+  if (tags.title) {
+    return `${tags.title}.mp3`
+  }
+  if (tags.artist) {
+    return `${tags.artist}.mp3`
+  }
+  return 'untitle.mp3'
+}
 
 function readMP3(url) {
   return new Promise ((resolve, reject) => {
     jsmediatags.read(url, {
       onSuccess: result => {
         if (result.tags) {
-          console.log(result.tags)
-          const song = {info: buildMP3String(result.tags), link: url}
+          // console.log(result.tags)
+          const song = {
+            info: buildMP3String(result.tags),
+            link: url,
+            downloadTitle: getDownLoadTitle(result.tags)
+          }
           resolve(song)
-          // chrome.storage.sync.set(song, () => console.log('storage saved'))
         }
         else {
           reject('没有检测到音乐')
@@ -24,12 +42,6 @@ function readMP3(url) {
     })
   })
 }
-
-
-function createLinkAndDownload () {
-
-}
-
 
 function sendNotify(song) {
   chrome.notifications.create(null, {
@@ -46,7 +58,7 @@ function sendNotify(song) {
  * @param  {[type]} tags [description]
  * @return string
  */
-function buildMP3String(tags, link) {
+function buildMP3String(tags) {
   let arr = []
   if (tags.title) {
     arr.push(`歌曲名：${tags.title}`)
@@ -60,12 +72,11 @@ function buildMP3String(tags, link) {
   if (tags.genre) {
     arr.push(`曲风：${tags.genre}`)
   }
-  return arr.join('-')
+  return arr.join('\r\n')
 }
 
 // https://developer.chrome.com/extensions/webRequest
 // 拦截请求，需要webRequest和webRequestBlocking权限
-// 过滤出音频
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
   if (details.type === 'media' && details.url.startsWith(MATCH_URL)) {
     console.log(details)
@@ -80,19 +91,22 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
           id: '77',
           title: "下载蚂蚁窝音乐",
           onclick: function(){
+            chrome.downloads.download({
+              url: song.link,
+              filename: song.downloadTitle
+            })
+
             // https://developer.chrome.com/extensions/tabs
             // 在tab页面执行脚本
-            chrome.tabs.executeScript(null, {
-              code: 'var e = document.createElement(\'a\');e.download="demo";e.href = "' + song.link + '";document.body.appendChild(e);e.click()'
-            });
+            // chrome.tabs.executeScript(null, {
+            //   code: 'var e = document.createElement(\'a\');e.download="demo";e.href = "' + song.link + '";document.body.appendChild(e);e.click()'
+            // });
           }
         });
-
-        // chrome.runtime.sendMessage(res, response => console.log(response))
       })
       .catch(error => console.log(error))
   }
-},{urls: [ "<all_urls>" ]},['requestHeaders','blocking']
+},{urls: [ "<all_urls>" ]}, ['requestHeaders','blocking']
 )
 
 

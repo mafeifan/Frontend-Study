@@ -1,17 +1,18 @@
 {
-  "name": "Chrome webrequest test",
-  "version": "0.1",
-  "description": "A test for webrequest",
+  "name": "mafengwo mp3 downloader",
+  "version": "0.2",
+  "description": "识别并下载蚂蜂窝游记页面的MP3",
   "manifest_version": 2,
   "permissions": [
     "<all_urls>",
+    "downloads",
     "webRequest",         // web请求
     "webRequestBlocking", // 阻塞式web请求
     "notifications",      // 通知
     "contextMenus",       // 右键菜单
-    "tabs",               // 访问tabs
-    "http://*/*",         // 可以通过executeScript或者insertCSS访问的网站
-    "https://*/*"
+    "tabs"                // 访问tabs
+    // "http://*/*",      // 可以通过executeScript或者insertCSS访问的网站
+    // "https://*/*"
   ],
   "background": {
     "scripts": [
