@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <nav>
+        <!-- lazy load component -->
+        <a href="/pages/BooksPage.js" @click.prevent="navigate">Books</a>
+        <a href="/pages/MoviesPage.js" @click.prevent="navigate">Movies</a>
+        <a href="/pages/GamesPage.js" @click.prevent="navigate">Games</a>
+    </nav>
+    <component :is="page"></component>
+  </div>
+<script src="node_modules/vue/dist/vue.js"></script>
+<!-- 必须加上 type="module" -->
+<script type="module">
+import BooksPage from './pages/BooksPage.js';
+new Vue({
+  el: '#app',
+  data: {
+    page: BooksPage
+  },
+  methods: {
+    navigate(event) {
+      this.page = () => import(`./${event.target.pathname}`)
+      // 如果 Vue.js < 2.5.0
+      // .then(m => m.default)
+    }
+  }
+});
+</script>
+</body>
+</html>
