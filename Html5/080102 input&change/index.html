@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+<input type="text" id="ipt">
+<button id="btn" data-event='input'>当前是input事件</button>
+<h3>change事件是失去焦点才触发，无法做到实时。input可以实时，但触发频率更高</h3>
+<p><a href="https://cn.vuejs.org/v2/guide/forms.html#lazy">vue</a> 里v-model实际绑定的是input事件，如要使用change可以v-model.lazy="msg"</p>
+<script>
+const ipt = document.querySelector('#ipt')
+const btn = document.querySelector('#btn')
+
+function listener(event) {
+  console.log(event)
+}
+
+// 默认input事件
+ipt.addEventListener('input', listener)
+
+btn.addEventListener('click', (event) => {
+  if (btn.getAttribute('data-event') === 'input') {
+    ipt.addEventListener('change', listener)
+    ipt.removeEventListener('input', listener)
+    btn.setAttribute('data-event', 'change')
+    btn.innerText = '当前是change事件'
+  }else {
+    ipt.removeEventListener('change', listener)
+    ipt.addEventListener('input', listener)
+    btn.setAttribute('data-event', 'input')
+    btn.innerText = '当前是input事件'
+  }
+})
+
+</script>
+</body>
+</html>
