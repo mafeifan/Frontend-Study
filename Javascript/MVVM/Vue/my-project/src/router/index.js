@@ -19,6 +19,11 @@ export default new Router({
       path: '/tree',
       name: 'TreePage',
       component: load('TreePage')
+    },
+    {
+      path: '/parent-child',
+      name: 'ParentChildPage',
+      component: load('ParentChildPage')
     }
   ]
 })
