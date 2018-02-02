@@ -49,7 +49,7 @@ $(document).ready(function() {
     });
   }
   // https://datatables.net/forums/discussion/33598/prexhr-dt-not-fired-on-first-ajax-request-after-page-load
-  // 有时候'preXhr.dt'事件不会触发
+  // 避免'preXhr.dt'事件不会触发
   let dtInstance = $('#example')
     .on('preXhr.dt', function ( e, settings, data ) {
       // data 发送给服务端的查询参数
