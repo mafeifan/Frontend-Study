@@ -45,7 +45,8 @@ $(document).ready(function() {
       // https://datatables.net/reference/option/ajax
       "ajax": {
         url: '../data/data.json',
-        // 添加额外的查询参数
+        // 覆盖参数
+        // 不会有columns[0]...非常多的参数呃
         data: function(result ) {
           return {"test":"225"};
         }

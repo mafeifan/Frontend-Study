@@ -1,1 +1,0 @@
-该项目已独立出来 https://github.com/mafeifan/mafengwo-mp3-downloader

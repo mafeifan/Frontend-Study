@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>2. serviceSide preXhr</title>
+  <title>获取搜索栏的值，默认初始化搜索</title>
   <style>
     body {
       width: 80%;
@@ -38,11 +38,19 @@
 <script src="../node_modules/datatables.net/js/jquery.dataTables.js"></script>
 <script>
 $(document).ready(function() {
+  const GLOBAL_SEARCH = 'demo.globalSearchKey'
 
 
+  // 方式1 获取最新搜索值
+  function addEventInputSearch() {
+    $('#example_filter input').on( 'keyup', function (e) {
+      console.log('--keyup--')
+       console.log(this.value)
+    });
+  }
   // https://datatables.net/forums/discussion/33598/prexhr-dt-not-fired-on-first-ajax-request-after-page-load
-  // 有时候'preXhr.dt'事件不会触发
-  var dtInstance = $('#example')
+  // 避免'preXhr.dt'事件不会触发
+  let dtInstance = $('#example')
     .on('preXhr.dt', function ( e, settings, data ) {
       // data 发送给服务端的查询参数
       console.log('event preXhr')
@@ -50,21 +58,41 @@ $(document).ready(function() {
     .on('draw.dt', function () {
       console.log( 'Redraw occurred at: ' + new Date().getTime() );
     })
-
-
-  dtInstance.DataTable({
-      "processing": true,
-      // 开启服务端处理
-      "serverSide": true,
-      // https://datatables.net/reference/option/ajax
-      "ajax": {
-        url: '../data/data.json',
-        // 添加额外的查询参数
-        data: {
-          user_id: 451
-        }
+    .on('init.dt', function (e, settings, json ) {
+      addEventInputSearch()
+    })
+    // 方式2 获取最新搜索值
+    .on('search.dt', function (e, settings) {
+      let api = new $.fn.dataTable.Api( settings );
+      let searchValue = api.search()
+      if (searchValue) {
+        localStorage.setItem(GLOBAL_SEARCH, searchValue)
+      }else {
+        localStorage.removeItem(GLOBAL_SEARCH)
       }
-    });
+    })
+
+
+  let dtConfig = {
+    processing: true,
+    // 开启服务端处理
+    // "serverSide": true,
+    // https://datatables.net/reference/option/ajax
+    ajax: {
+      url: '../data/data.json',
+    },
+  }
+
+  // 初始化搜索值
+  // oSearch: {sSearch: 'London'}
+  if (localStorage.getItem(GLOBAL_SEARCH)) {
+    dtConfig.oSearch = {sSearch: localStorage.getItem(GLOBAL_SEARCH)}
+  }
+
+  // 载入配置
+  dtInstance.DataTable(dtConfig);
+
+
 });
 </script>
 </body>

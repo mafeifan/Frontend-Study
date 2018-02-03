@@ -4,8 +4,10 @@
   border: 1px solid #000;
 
   display: flex;
+/*  flex-direction: column;
+  align-content: flex-end;*/
 }
-#main div {
+#main > div {
   flex: 1;
 }
 #main .item2 {
