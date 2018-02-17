@@ -1,10 +1,13 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const helmet = require('helmet')
 const app = express();
 
 // express配置
 require('./src/config')(app)
+
+app.use(helmet())
 
 // 设置用户表单提交动作信息的中间件，所有信息会保存在 req.body 里
 app.use(bodyParser.urlencoded({ extended: false }));
