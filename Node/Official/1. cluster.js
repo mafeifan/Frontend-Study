@@ -34,4 +34,8 @@ ab -c 100 -n 100 http://localhost:8124/?n=35
 参考：
 https://www.cnblogs.com/chris-oil/p/5339305.html
 http://blog.csdn.net/iamdingping123/article/details/46504803
+
+建议使用pm2的cluster模式
+http://pm2.keymetrics.io/docs/advanced/pm2-module-system/
+https://keymetrics.io/2015/03/26/pm2-clustering-made-easy/
  */
