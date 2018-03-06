@@ -6,6 +6,8 @@ module.exports = function(app) {
 
 
 	app.get('/', function(request, response) {
+	  response.cookie('name', 'finley')
+    response.send(request.cookies)
     response.render('index', {
         message: 'Hey everyone! This is my webpage.'
     });

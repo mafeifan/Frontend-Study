@@ -1,8 +1,11 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const helmet = require('helmet')
 const app = express();
+
+
 
 // express配置
 require('./src/config')(app)
@@ -11,6 +14,10 @@ app.use(helmet())
 
 // 设置用户表单提交动作信息的中间件，所有信息会保存在 req.body 里
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// 支持解析cookie，可以使用 response.send(request.cookies) 获取所有cookie
+// https://www.npmjs.com/package/cookie-parsers
+app.use(cookieParser());
 
 // 一个流行的日志中间件
 // https://www.npmjs.com/package/morgan
