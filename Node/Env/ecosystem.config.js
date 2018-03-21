@@ -12,11 +12,11 @@ module.exports = {
       env: {
         COMMON_VARIABLE: 'true',
       },
-      env_development : {
-        NODE_ENV: 'development'
+      env_dev : {
+        NODE_ENV: 'development111'
       },
-      env_production : {
-        NODE_ENV: 'production'
+      env_prod : {
+        NODE_ENV: 'production222'
       }
     }
   ],
