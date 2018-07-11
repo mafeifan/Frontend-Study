@@ -24,6 +24,11 @@ export default new Router({
       path: '/parent-child',
       name: 'ParentChildPage',
       component: load('ParentChildPage')
-    }
+    },
+    {
+      path: '/slot',
+      name: 'SlotPage',
+      component: load('SlotPage')
+    },
   ]
 })
