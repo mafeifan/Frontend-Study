@@ -30,5 +30,10 @@ export default new Router({
       name: 'SlotPage',
       component: load('SlotPage')
     },
+    {
+      path: '/vuex',
+      name: 'VuexPage',
+      component: load('VuexPage')
+    },
   ]
 })
