@@ -35,5 +35,10 @@ export default new Router({
       name: 'WatchPage',
       component: load('WatchPage')
     },
+    {
+      path: '/vuex',
+      name: 'VuexPage',
+      component: load('VuexPage')
+    },
   ]
 })
