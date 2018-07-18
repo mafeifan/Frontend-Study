@@ -2,19 +2,19 @@
   <div class="myTree">
     <h1>递归组件学习</h1>
     <ul v-for="item in menuItemsData">
-      <my-tree :model="item" :key="item.menuCode"></my-tree>
+      <tree-menu :model="item" :key="item.menuCode"></tree-menu>
     </ul>
   </div>
 </template>
 
 <script>
-import myTree from '@/components/base/Tree'
+import treeMenu from '@/components/base/treeMenu'
 import treeData from './data.json'
 
 export default {
   name: 'TreePage',
   components: {
-    myTree
+    treeMenu
   },
   data () {
     return {

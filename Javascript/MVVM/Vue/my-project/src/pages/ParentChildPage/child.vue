@@ -26,7 +26,7 @@ export default {
     this.data = this.getDataFunc()
   },
   methods: {
-    // 直接掉prop的方法，也就是父组件的方法
+    // 直接调用prop的方法，也就是父组件的方法
     setData(param) {
       this.setDataFunc(param)
     }

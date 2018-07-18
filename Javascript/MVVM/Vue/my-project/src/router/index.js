@@ -30,5 +30,10 @@ export default new Router({
       name: 'SlotPage',
       component: load('SlotPage')
     },
+    {
+      path: '/watch',
+      name: 'WatchPage',
+      component: load('WatchPage')
+    },
   ]
 })
