@@ -17,6 +17,7 @@
   import { mapGetters, mapState } from 'vuex'
   export default {
     computed: {
+      // mapState 函数返回的是一个对象，...是展开运算符
       ...mapState({
         checkoutStatus: state => state.cart.checkoutStatus
       }),
