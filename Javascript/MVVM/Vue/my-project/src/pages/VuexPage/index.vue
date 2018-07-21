@@ -1,5 +1,10 @@
 <template>
   <div class="pageVuex">
+    <!-- 例子1 -->
+    <VuexDemo1></VuexDemo1>
+    <!-- 例子2 语法糖 -->
+    <VuexDemo2></VuexDemo2>
+    <hr>
     <h1>Shopping Cart Example</h1>
     <hr>
     <h2>Products</h2>
@@ -11,6 +16,8 @@
 
 <script>
 import Vue from 'vue'
+import VuexDemo1 from './demo1'
+import VuexDemo2 from './demo2'
 import ProductList from './ProductList'
 import ShoppingCart from './ShoppingCart'
 import { currency } from './filter/currency'
@@ -19,6 +26,8 @@ Vue.filter('currency', currency)
 export default {
   name: 'VuexPage',
   components: {
+    VuexDemo1,
+    VuexDemo2,
     ProductList,
     ShoppingCart
   },
