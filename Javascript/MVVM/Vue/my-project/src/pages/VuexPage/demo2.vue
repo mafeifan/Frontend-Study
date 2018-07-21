@@ -30,6 +30,7 @@ export default {
     }
   },
   methods: {
+    // https://vuex.vuejs.org/zh/api/#mapactions
     ...mapActions('demo', [
       'AddTodoItem'
     ]),
@@ -39,9 +40,14 @@ export default {
     // },
   },
   computed: {
-    ...mapState({
-      todos: state => state.demo.todos,
-    }),
+    // 第一个参数是命名空间
+    ...mapState('demo', ['todos']),
+
+    // 下面的写法等价
+    // ...mapState({
+    //   todos: state => state.demo.todos,
+    // }),
+
     // 下面的写法等价
     // todos() {
     //   return this.$store.state.demo.todos
