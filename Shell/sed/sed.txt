@@ -1,0 +1,51 @@
+
+# s选项 表示替换 	 /g 匹配所有行
+
+#将pets.txt文件中所有行的my替换成Ma Fei并导向1pets.txt
+sed "s/my/Ma Fei/g" pets.txt > 1pets.txt
+# -i直接修改文件1pets.txt的内容
+sed -i "s/my/Ma Fei/g" 1pets.txt
+
+
+# d删除
+
+#删除匹配adam的行
+sed "/adam/d" pets.txt
+#删除第二行
+sed "2d" pets.txt
+#只保留第一行
+sed '2,$d' pets.txt
+#删除匹配字母t的行
+sed "/[Tt]/d" pets.txt
+# 删除匹配ab的行(不区分大小写) 即AB Ab aB Ab
+sed "/[Aa][Bb]/d" pets.txt
+
+
+
+# a命令(append)  后插    i命令(insert) 前插
+
+#第二行后插入一行AAA
+sed "2a AAA" pets.txt
+#每行前插入
+sed "i AAA" pets.txt
+#最后一行前插入
+sed "$ i AAA" pets.txt
+#末尾追加一行
+sed "$ i AAA" pets.txt
+#匹配dog追加一行--
+sed "/dog/a --" pets.txt
+
+sed -i "/6:2345:respawn:/a 7:2345:respawn:/usr/local/ccenter/run tty6"  /etc/inittab
+
+
+# c命令是替换匹配行 整行内容会被替换  
+# s是替换匹配的内容 只替换匹配内容
+
+
+
+
+##### 实际运用 ##### 
+#1.修改php配置文件,将short_open_tag = Off 改为short_open_tag = On
+sed -i 's/short_open_tag = Off/short_open_tag = On/g' /usr/local/php/etc/php.ini
+
+#2 /etc/inittab中 在6:2345:respawn:后追加一行 7:2345:respawn:/usr/local/ccenter/run tty6
