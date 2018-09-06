@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <router-link to="/tree">Go to Foo</router-link>
+    <router-link to="/parent-child">Go to Bar</router-link>
     <router-view/>
   </div>
 </template>

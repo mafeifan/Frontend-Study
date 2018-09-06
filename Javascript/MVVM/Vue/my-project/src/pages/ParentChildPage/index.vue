@@ -1,10 +1,11 @@
 <template>
-  <div class="myTree">
+  <div class="myTree" style="border: 1px dotted blue">
     <h1>父子组件数据传递</h1>
     <h3>Parent:</h3>
+    <div v-text="fromInner"></div>
     <div>{{ data }}</div>
     <h3>Child:</h3>
-    <i-child :get-data-func="getData" :set-data-func="setData" />
+    <i-child :get-data-func="getData" :set-data-func="setData" :outer.sync="fromInner"/>
   </div>
 </template>
 
@@ -19,7 +20,8 @@ export default {
   },
   data () {
     return {
-      data: 'Parent component'
+      data: 'Parent component',
+      fromInner: '',
     }
   },
   methods: {

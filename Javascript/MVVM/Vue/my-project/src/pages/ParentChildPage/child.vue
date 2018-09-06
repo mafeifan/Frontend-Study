@@ -1,7 +1,9 @@
 <template>
-  <div class="child">
+  <div class="child" style="border: 1px dotted red">
     <div>{{data}}</div>
     <button @click="setData('from child')">load</button>
+    <input type="text" @input="handleOuter" v-model="innerText">
+    <div>等待被内部组件修改</div>
   </div>
 </template>
 
@@ -19,17 +21,22 @@ export default {
   },
   data () {
     return {
-      data: ''
+      data: '',
+      innerText: '',
     }
   },
   mounted () {
-    this.data = this.getDataFunc()
+    this.data = this.getDataFunc();
   },
   methods: {
     // 直接调用prop的方法，也就是父组件的方法
     setData(param) {
-      this.setDataFunc(param)
-    }
+      this.setDataFunc(param);
+    },
+    handleOuter(e) {
+      console.log(e);
+      this.$emit('update:outer', this.innerText);
+    },
   },
   components: {
   },
