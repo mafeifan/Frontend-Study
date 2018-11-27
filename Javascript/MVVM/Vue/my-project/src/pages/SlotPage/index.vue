@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>我是父组件的标题</h1>
-    <!-- 1. 匿名插槽，注意被替换的内容 -->
+    <p>1. 匿名插槽，注意被替换的内容</p>
     <child>
       <p>这是一些初始内容</p>
       <p>这是更多的初始内容</p>
     </child>
 
     <hr>
-    <!-- 2. 匿名插槽，没有要分发的内容 -->
+    <p>2. 匿名插槽，没有要分发的内容</p>
     <child></child>
 
     <hr>
@@ -24,7 +24,8 @@
     </child>
 
     <hr>
-    <!-- 3. 作用域插槽, 子组件提供数据，父组件提供样式 -->
+
+    <p>3. 作用域插槽, 子组件提供数据，父组件提供样式</p>
 
     <!--第一次使用,直接显示 -->
     <childScope>
@@ -54,6 +55,18 @@
 
     <hr>
 
+    <table-widget
+      :header="tableWidget.header"
+      :rows="users"
+    >
+    <tbody slot="body">
+      <tr v-for="(item, index) in users">
+        <td>{{item.name}}</td>
+        <td>{{item.age}}</td>
+      </tr>
+    </tbody>
+    </table-widget>
+
   </div>
 </template>
 
@@ -61,9 +74,16 @@
 import child from './child';
 import childScope from './child-scope';
 import childScope2 from './child-scope2';
+import TableWidget from './component/TableWidget';
 
 export default {
   name: 'SlotPage',
+  components: {
+    child,
+    childScope,
+    childScope2,
+    TableWidget,
+  },
   data () {
     return {
       users: [
@@ -72,14 +92,12 @@ export default {
         {id: 3, name: '王五', age: 27},
         {id: 4, name: '张龙', age: 27},
         {id: 5, name: '赵虎', age: 27}
-      ]
+      ],
+      tableWidget: {
+        header: ['name', 'age']
+      }
     }
   },
-  components: {
-    child,
-    childScope,
-    childScope2,
-  }
 }
 </script>
 
