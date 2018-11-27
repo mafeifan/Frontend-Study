@@ -1,0 +1,64 @@
+@-moz-document url-prefix() {
+    fieldset {
+        display: table-cell;
+    }
+}
+
+hr {
+    border: 1px solid #333;
+}
+
+
+/**
+Client Manager Start
+**/
+.fancytree-container .btn-group{
+    display: none;
+}
+.fancytree-container tbody tr:hover .btn-group{
+    display: inline-block;
+}
+/**
+Client Manager End
+**/
+
+
+/**
+Create entitlement to person attribute start
+**/
+.datetimeicon, .phoneicon{
+    cursor: pointer;
+}
+
+.tooltip-inner{
+    background-color: #F1C232;
+    color: #080808;
+    width: 200px;
+}
+
+.tooltip.top .tooltip-arrow ,.tooltip.top-left .tooltip-arrow,.tooltip.top-right .tooltip-arrow {
+    border-top-color: #F1C232;
+}
+
+.tooltip.right .tooltip-arrow {
+    border-right-color: #F1C232;
+}
+
+.tooltip.left .tooltip-arrow {
+    border-left-color: #F1C232;
+}
+
+.tooltip.bottom .tooltip-arrow ,.tooltip.bottom-left .tooltip-arrow ,.tooltip.bottom-right .tooltip-arrow {
+    border-bottom-color: #F1C232;
+}
+
+.field-row {
+    margin-bottom: 20px;
+}
+
+.icons{
+    padding-top: 8px;
+}
+/**
+Create entitlement to person attribute end
+**/
