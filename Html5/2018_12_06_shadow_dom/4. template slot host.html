@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+/* 会受到全局样式的影响 */
+/* * 选择器会耽误事儿。因为使用 * 代表着所有的元素，包含着你想要关联的shadow root元素、宿主元素。应用的宿主元素和继承的属性，会渗透shadow DOM的边界应用到内层元素上。 */
+	* {
+		 color: red;
+	}
+</style>
+<body>
+
+<div class="shadowhost">
+    <em slot="shadowhost_content1">唱歌</em>
+    <em slot="shadowhost_content2">跳舞</em>
+</div>
+
+
+<template class="template">
+	<style type="text/css">
+	 	/* 定义宿主样式:host */
+		:host {
+            color: #E85E5E !important;
+        }
+        /* 定义宿主hover状态下的样式 */
+        :host(:hover) {
+            color: #000;
+        }
+	</style>
+    <h1>你<slot name="shadowhost_content1"></slot>我<slot name="shadowhost_content2"></slot>!</h1>
+</template>
+
+
+<p>https://github.com/Tencent/omi/blob/master/tutorial/shadow-dom-in-depth.cn.md</p>
+
+<script>
+var shadowHost = document.querySelector('.shadowhost');
+var shadowRoot = shadowHost.attachShadow({mode: 'open'});
+var template = document.querySelector('.template');
+// template.content会返回一个文档片段，可以理解为另外一个document。
+// 利用document.importNode获取节点，true表示深度克隆。
+shadowRoot.appendChild(document.importNode(template.content, true));
+// 
+// shadowRoot.appendChild(template.content.cloneNode(true));
+</script>
+<style type="text/css">
+
+</style>
+</html>

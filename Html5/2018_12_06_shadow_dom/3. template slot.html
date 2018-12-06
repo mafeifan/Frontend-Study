@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+<div class="shadowhost">
+    <em slot="shadowhost_content1">唱歌</em>
+    <em slot="shadowhost_content2">跳舞</em>
+</div>
+
+
+<template class="template">
+    <h1>你<slot name="shadowhost_content1"></slot>我<slot name="shadowhost_content2"></slot>!</h1>
+</template>
+
+
+<script>
+var shadowHost = document.querySelector('.shadowhost');
+var shadowRoot = shadowHost.attachShadow({mode: 'open'});
+var template = document.querySelector('.template');
+// template.content会返回一个文档片段，可以理解为另外一个document。
+// 利用document.importNode获取节点，true表示深度克隆。
+shadowRoot.appendChild(document.importNode(template.content, true));
+// 
+// shadowRoot.appendChild(template.content.cloneNode(true));
+</script>
+<style type="text/css">
+
+</style>
+</html>

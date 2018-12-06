@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<!-- 模板 -->
+<template id="wgTemplate">
+  <style>
+    .btn {
+      color: #fff;
+      background: #006dcc;
+    }
+  </style>
+  <button type="button" class="btn">button widget</button>
+</template>
+
+<!-- shadow dom 容器 -->
+<div id="my-widget"></div>
+</body>
+<script type='text/javascript'>
+  // 需要一个shadow dom的容器	
+  var host = document.querySelector("#my-widget")
+  // 随后通过 document.importNode() 获取到控件的模板并克隆
+  var tp = document.querySelector("#wgTemplate")
+  var clone = document.importNode(tp.content, true)
+  // 最后将模板内容 clone 作为shadow tree插入到shadow root中
+  host.attachShadow({mode: 'open'}).appendChild(clone)
+
+
+
+</script>
+<style type="text/css">
+:host(.btn) {
+  font-weight: bold;
+}
+</style>
+</html>
