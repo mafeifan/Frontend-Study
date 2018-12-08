@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RxJS  Demo</title>
+</head>
+<body>
+  <button id="btn">button</button>
+
+  <button id="btn2">button</button>
+</body>
+<script src='./lib/Rx.umd.js'></script>
+<script>
+  // concatMap 其实就是 map 加上 concatAll 的简化写法
+
+  // 共同特点：这三个 operators 可以把第一个参数所回传的 promise 对象直接转成 observable，这样我们就不用再用 Rx.Observable.from 转一次
+
+  // switchMap 只保留最新的  大多数情况 typeheader
+  // mergeMap 并行执行       网络请求
+  // concatMap 一个接着一个执行  UI动画
+
+  var source = Rx.Observable.fromEvent(document.querySelector('#btn'), 'click');
+
+  // var example = source
+  //   .map(e => Rx.Observable.interval(1000).take(3))
+  //   .concatAll();
+
+  // 简写
+  var example = source
+    .concatMap(e => Rx.Observable.interval(100).take(3));
+
+
+  example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+  });
+
+
+
+  function getPersonData() {
+    return fetch('https://jsonplaceholder.typicode.com/posts/1')
+      .then(res => res.json())
+  }
+  var source2 = Rx.Observable.fromEvent(document.querySelector('#btn2'), 'click');
+
+  // switchMap 快速点击只打印一个log
+  // mergeMap  快速点击打印所有log
+  var example2 = source2.switchMap(e => getPersonData());
+  //直接回传 promise 物件
+
+  example2.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+  });
+
+
+
+
+</script>
+</html>
