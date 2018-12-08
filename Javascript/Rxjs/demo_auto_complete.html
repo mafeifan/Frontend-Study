@@ -75,7 +75,14 @@
   const render = (suggestArr = []) => suggestList.innerHTML = suggestArr.map(item => '<li>'+ item +'</li>').join('');
 
   keyword
-    .debounceTime(100)
+    .filter(e => e.target.value.length > 2) // 打了 2 个字以上再发送 request
+    .debounceTime(100)  // 每次打完字要等待 100 毫秒再发送 request
+    // 在 API 失败的时候重新尝试 3 次
+    // .switchMap(
+    //   e => Rx.Observable.from(getSuggestList(e.target.value))
+    //     .retry(3),
+    //   (e, res) => res[1]
+    // )
     .switchMap(
       e => getSuggestList(e.target.value),
       (e, res) => res[1]
