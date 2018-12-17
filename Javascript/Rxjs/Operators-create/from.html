@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>RxJS  Demo</title>
+</head>
+<body>
+</body>
+<script src='../lib/rxjs.6.3.3.umd.min.js'></script>
+<script>
+  const {from} = rxjs;
+
+  function f() {
+    return from(arguments);
+  }
+
+  const observer = {
+    next: value => {
+      console.log('Next: ' + value);
+    },
+    error: error => {
+      console.log('Error:', error);
+    },
+    complete: () => {
+      console.log('Complete');
+    }
+  }
+
+  // Array Like Object
+  f(1, 2, 3).subscribe(observer);
+
+  // string
+  from('foo').subscribe(observer);
+
+  // Set, any iterable object
+  const s = new Set(['foo', window]);
+  from(s).subscribe(observer);
+
+  // Promise
+  const source = from(new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('Hello RxJS!');
+      },3000)
+    }))
+
+  source.subscribe(observer);
+
+</script>
+</html>

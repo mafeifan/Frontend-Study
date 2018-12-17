@@ -24,14 +24,17 @@
   <p>一个使用rxjs实现元素拖拽的小例子</p>
   <div id="drag"></div>
 </body>
-<script src='./lib/Rx.umd.js'></script>
+<script src='../lib/rxjs.umd.js'></script>
 <script>
+  const {fromEvent} = rxjs;
+  const {map, concatAll, takeUntil} = rxjs.operators;
+
   var dragDOM = document.getElementById('drag');
   var body = document.body;
 
-  var boxMouseDown$ = Rx.Observable.fromEvent(dragDOM, 'mousedown');
-  var bodyMouseUp$ = Rx.Observable.fromEvent(body, 'mouseup');
-  var bodyMouseMove$ = Rx.Observable.fromEvent(body, 'mousemove');
+  var boxMouseDown$ = fromEvent(dragDOM, 'mousedown');
+  var bodyMouseUp$ = fromEvent(body, 'mouseup');
+  var bodyMouseMove$ = fromEvent(body, 'mousemove');
 
 
   /*
@@ -43,17 +46,20 @@
    */
 
   boxMouseDown$
-  // 直到鼠标按下点击时
-    .map(function (event) {
-      return bodyMouseMove$.takeUntil(bodyMouseUp$);
-    })
-    .concatAll()
-    .map(function (event) {
-      return { x: event.clientX, y: event.clientY };
-    })
+    .pipe(
+      // 直到鼠标按下点击时
+      map(() => bodyMouseMove$.pipe(takeUntil(bodyMouseUp$))),
+      concatAll(),
+      map(event => {
+        return {
+          x: event.clientX,
+          y: event.clientY
+        }}
+      ),
+    )
     .subscribe(function (pos) {
       dragDOM.style.left = pos.x + 'px';
-      dragDOM.style.top = pos.y + 'px';
+      dragDOM.style.top  = pos.y + 'px';
     });
 
 </script>
