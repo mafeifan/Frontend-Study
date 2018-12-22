@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<script type="text/javascript">
+  // 传入两个函数，返回新的函数
+  var compose = function(f,g) {
+    return function(x) {
+      return f(g(x));
+    };
+  };
+
+  var toUpperCase = function (x) {
+    return x.toLocaleUpperCase();
+  };
+
+  var exclaim = function(x) {
+    return x + ' !';
+  };
+
+  var newFuc = compose(toUpperCase, exclaim);
+  var result = newFuc('shut and say');
+  console.log(result);
+</script>
+</body>
+</html>
