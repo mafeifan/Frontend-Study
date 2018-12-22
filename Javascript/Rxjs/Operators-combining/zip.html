@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>RxJS  Demo</title>
+</head>
+<body>
+</body>
+<script src='../lib/rxjs.6.3.3.umd.min.js'></script>
+<script>
+  const {Observable, Subject, ReplaySubject, from, of, zip} = rxjs;
+  const {map, filter, switchMap, concatAll, takeUntil} = rxjs.operators;
+
+  let age$  = of(27, 25, 29);
+  let name$ = of('Foo', 'Bar', 'Beer');
+
+  zip(age$, name$)
+    .pipe(
+      map((mixArr, index) => ({ mixArr, index })),
+    )
+    .subscribe(x => console.log(x));
+
+
+  // merge
+</script>
+</html>

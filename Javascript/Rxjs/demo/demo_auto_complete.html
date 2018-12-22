@@ -59,8 +59,11 @@
   </ul>
 </div>
 </body>
-<script src='./lib/Rx.umd.js'></script>
+<script src='../lib/rxjs.umd.js'></script>
 <script>
+  const {fromEvent} = rxjs;
+  const {filter, map, debounceTime, switchMap} = rxjs.operators;
+
   const url = 'https://zh.wikipedia.org/w/api.php?action=opensearch&format=json&limit=5&origin=*';
 
   const getSuggestList = (keyword) => fetch(url + '&search=' + keyword, { method: 'GET', mode: 'cors' })
@@ -69,30 +72,28 @@
   const searchInput = document.getElementById('search');
   const suggestList = document.getElementById('suggest-list');
 
-  const keyword = Rx.Observable.fromEvent(searchInput, 'input');
-  const selectItem = Rx.Observable.fromEvent(suggestList, 'click');
+  const keyword$ = fromEvent(searchInput, 'input');
+  const selectItem$ = fromEvent(suggestList, 'click');
 
   const render = (suggestArr = []) => suggestList.innerHTML = suggestArr.map(item => '<li>'+ item +'</li>').join('');
 
-  keyword
-    .filter(e => e.target.value.length > 2) // 打了 2 个字以上再发送 request
-    .debounceTime(100)  // 每次打完字要等待 100 毫秒再发送 request
-    // 在 API 失败的时候重新尝试 3 次
-    // .switchMap(
-    //   e => Rx.Observable.from(getSuggestList(e.target.value))
-    //     .retry(3),
-    //   (e, res) => res[1]
-    // )
-    .switchMap(
-      e => getSuggestList(e.target.value),
-      (e, res) => res[1]
+  keyword$
+    .pipe(
+      filter(e => e.target.value.length > 2), // 打了 2 个字以上再发送 request
+      debounceTime(100),  // 每次打完字要等待 100 毫秒再发送 request
+      switchMap(
+        e => getSuggestList(e.target.value),
+        (e, res) => res[1]
+      ),
     )
     .subscribe(list => render(list));
 
   // 点击列表的项显示在输入框中
-  selectItem
-    .filter(e => e.target.matches('li'))
-    .map(e => e.target.innerText)
+  selectItem$
+    .pipe(
+      filter(e => e.target.matches('li')),
+      map(e => e.target.innerText),
+    )
     .subscribe(text => {
       searchInput.value = text;
       render();

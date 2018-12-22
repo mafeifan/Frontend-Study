@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>RxJS  Demo</title>
+</head>
+<script src='../lib/rxjs.6.3.3.umd.min.js'></script>
+<script>
+  const {of, range, interval} = rxjs;
+
+  const observer = {
+    next: value => {
+      console.log('Next: ' + value);
+    },
+    error: error => {
+      console.log('Error:', error);
+    },
+    complete: () => {
+      console.log('Complete');
+    }
+  }
+
+  // 传啥发射啥
+  of(1, 2, 3).subscribe(observer);
+
+  of([4, 5, 6]).subscribe(observer);
+
+  // https://rxjs-dev.firebaseapp.com/api/index/function/range
+  // 从10开始递增+1连续发射两次， 输出 10, 11
+  range(10, 2).subscribe(observer);
+
+  // 从0开始计数，每间隔num ms秒发射一次
+  const num = 1000;
+  interval(num).subscribe(observer);
+
+</script>
+</html>

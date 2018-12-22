@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>RxJS  Demo</title>
@@ -7,18 +7,20 @@
 <body>
 <button id="btn">button</button>
 </body>
-<script src='./lib/Rx.umd.js'></script>
+<script src='./lib/rxjs.umd.js'></script>
 <script>
   // https://www.jianshu.com/p/18f39d6e189d
-
+  const {map, mergeAll, take} = rxjs.operators;
   //  订阅click
-  var click = Rx.Observable.fromEvent(document.querySelector('#btn'), 'click');
-  // 每点击一下就发送
-  var source = click.map(e => {
-    console.log(e);
-    // 生成新的 Observable
-    return Rx.Observable.interval(1000).take(3)
-  });
+  var example = rxjs.fromEvent(document.body, 'click')
+    .pipe(
+      map(e => {
+        console.log(e);
+        // 生成新的 Observable
+        return rxjs.interval(1000).pipe(take(3))
+      }),
+      mergeAll()
+    )
 
   // concatAll 必须等第一个observable处理完才进行下一个，使得 Observable 连续
   // 因为现在送出 observable 是无限的永远不会完成(complete)，就导致他永远不会处理第二个送出的 observable!
@@ -30,7 +32,7 @@
   // var example = source.switch();
 
   // mergeAll 同时处理所有 observable
-  var example = source.mergeAll();
+  // var example = source.mergeAll();
   example.subscribe({
     next: (value) => { console.log(value); },
     error: (err) => { console.log('Error: ' + err); },
