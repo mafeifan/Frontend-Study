@@ -6,7 +6,7 @@
 </head>
 <body>
 </body>
-<script src='../lib/rxjs.6.3.3.umd.min.js'></script>
+<script src='../lib/rxjs6.3.3.umd.js'></script>
 <script>
   const {from} = rxjs;
 
@@ -41,7 +41,7 @@
       setTimeout(() => {
         resolve('Hello RxJS!');
       },3000)
-    }))
+    }));
 
   source.subscribe(observer);
 

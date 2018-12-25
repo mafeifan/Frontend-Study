@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>RxJS  Demo</title>
+</head>
+<body>
+</body>
+<script src='../lib/rxjs6.3.3.umd.js'></script>
+<script>
+  const {Observable, Subject, ReplaySubject, from, of, zip, interval} = rxjs;
+  const {take, skip, takeLast, last, merge, concat, map, filter, switchMap, concatAll, takeUntil} = rxjs.operators;
+
+  // 3，4 ，5
+  // 要等3秒
+  const source = interval(1000).pipe(
+    skip(3),
+    take(3),
+    // 加上这个会显示5，但是要等整个observable完成
+    // takeLast(1) 等价于 last()
+    takeLast(1),
+  );
+
+  // observer 其实就是实现了next方法，error方法和complete方法的对象
+  const observer = {
+    next: value => {
+      console.log(`observer: ` + value )
+    },
+    error: error => {
+      console.log('Error:', error);
+    },
+    complete: () => {
+      console.log('complete');
+    }
+  };
+
+  source.subscribe(observer);
+
+</script>
+</html>
