@@ -23,6 +23,7 @@
   const {take} = rxjs.operators;
 
   const source = rxjs.interval(1000).pipe(take(3));
+  const subject = new rxjs.Subject();
 
   // observer 其实就是实现了next方法，error方法和complete方法的对象
   const observerA = {
@@ -49,18 +50,17 @@
     }
   };
 
-  // const subject = new rxjs.Subject();
-  // subject.subscribe(observerA);
-  // subject.subscribe(observerB);
+  subject.subscribe(observerA);
+  subject.subscribe(observerB);
 
   // 建立观察者来订阅 observable
   // 订阅一个 Observable 就像是执行一个 function
 
   // subscribe 会调用
-  source.subscribe(observerA);
-  setTimeout(() => {
-    source.subscribe(observerB);
-  }, 1000);
+  // source.subscribe(observerA);
+  // setTimeout(() => {
+  //   source.subscribe(observerB);
+  // }, 1000);
   // observable.subscribe(observerB);
 
   // observable.subscribe(subject)
