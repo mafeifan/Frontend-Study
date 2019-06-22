@@ -1,0 +1,35 @@
+<style type="text/css">
+  /*
+   以"--"开头，后面可以是数字、字母、下划线、连字符、汉字等，但不能包含$、[、^、(、%等字符
+   可以使用!important修饰
+   定义只能出现在块{}内
+  */
+  :root {
+    --main-bg-color: brown;
+    --1: red;
+    --_: blue;
+    --飞: green;
+  }
+
+  body {
+    --1: gray;
+  }
+
+  p {
+    --fz14: 14px;
+    color: var(--1);
+  }
+
+  em {
+    color: var(--飞);
+    font-size: var(--fz14, 18px);
+  }
+</style>
+
+<section></section>
+
+<div>
+  <p>let's do it</p>
+  <p>let do it <em>man</em></p>
+  <em>这里找不到fz14变量，用默认的18px</em>
+</div>

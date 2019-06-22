@@ -1,0 +1,26 @@
+<style type="text/css">
+  body {
+    --primary: red;
+    --secondary: blue;
+  }
+
+  /* 为元素应用配色 */
+  a {
+    color: var(--primary);
+    text-decoration-color: var(--secondary);
+  }
+
+  /* 当小屏幕使用另外一套配色方案 */
+  @media screen and (min-width: 768px) {
+    body {
+      --primary:  black;
+      --secondary: orange;
+    }
+  }
+</style>
+
+<section></section>
+
+<div>
+  <a href="#">Jack London</a>
+</div>
