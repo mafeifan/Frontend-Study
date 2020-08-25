@@ -9,7 +9,9 @@ import router from './router'
 
 import store from '@/pages/VuexPage/store'
 import 'weui'
-
+import 'vant/lib/index.css';
+import Vant from 'vant';
+Vue.use(Vant);
 import jQuery from 'jquery'
 import 'font-awesome/css/font-awesome.css'
 

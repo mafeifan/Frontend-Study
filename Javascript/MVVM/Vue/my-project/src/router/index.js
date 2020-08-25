@@ -12,7 +12,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
+      name: 'Home',
       component: load('HelloPage')
     },
     {
@@ -44,6 +44,11 @@ export default new Router({
       path: '/composition-api',
       name: 'CompositionAPIPage',
       component: load('CompositionAPIPage')
+    },
+    {
+      path: '/dialog',
+      name: 'DialogPromisePage',
+      component: load('DialogPromisePage')
     },
   ]
 })
