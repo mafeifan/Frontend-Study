@@ -14,7 +14,9 @@
             // 颜色
             color: String
         },
-        setup() {
+        setup(props, context) {
+            console.log(props);
+            console.log(context);
             const state = reactive({
                 defaultColor: "red"
             });

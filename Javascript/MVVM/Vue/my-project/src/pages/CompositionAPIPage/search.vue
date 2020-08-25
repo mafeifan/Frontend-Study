@@ -28,7 +28,9 @@
     import store from "./stores";
     export default {
         // setup相当于2.x版本的beforeCreate生命周期
-        setup() {
+        setup(props, context) {
+            console.log(props);
+            console.log(context);
             // reactive() 函数接收一个普通对象，返回一个响应式的数据对象
             const state = reactive({
                 searchValue: "",

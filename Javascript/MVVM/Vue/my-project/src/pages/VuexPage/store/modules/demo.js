@@ -13,8 +13,8 @@ export default {
   // 只能是同步操作
   // action -> commit -> mutation
   mutations: {
-    get_todo_list(_state, data) {
-      _state.todos = data;
+    get_todo_list(state, data) {
+      state.todos = data;
     },
     add_todo_item(state, item) {
       state.todos.push(item)
@@ -28,10 +28,10 @@ export default {
     getTodos ({ commit }) {
       // 这里用 setTimeout 模拟异步，实际可以是http请求，如 Vue.$get('/api/todolist')
       setTimeout(() => {
-        commit('get_todo_list', [{id:1, name: "finley"}, {id:2, name: "jack"}, {id:3, name: "wang"}])
+        commit('get_todo_list', [{id:1, name: "finley1"}, {id:2, name: "jack1"}, {id:3, name: "wang1"}])
       }, 1000)
     },
-    AddTodoItem({state, commit}, item) {
+    addTodoItem({state, commit}, item) {
       let nextMaxId = state.todos.length + 1
       commit('add_todo_item', {
         id: nextMaxId,

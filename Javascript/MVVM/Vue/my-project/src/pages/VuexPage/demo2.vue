@@ -32,7 +32,7 @@ export default {
   methods: {
     // https://vuex.vuejs.org/zh/api/#mapactions
     ...mapActions('demo', [
-      'AddTodoItem'
+      'addTodoItem'
     ]),
     // 下面的写法等价
     // AddTodoItem(todoItem) {
