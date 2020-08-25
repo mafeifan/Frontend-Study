@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
   name: 'VuexDemo1',
   components: {

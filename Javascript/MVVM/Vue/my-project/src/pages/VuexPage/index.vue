@@ -21,7 +21,7 @@ import VuexDemo2 from './demo2'
 import ProductList from './ProductList'
 import ShoppingCart from './ShoppingCart'
 import { currency } from './filter/currency'
-Vue.filter('currency', currency)
+Vue.filter('currency', currency);
 
 export default {
   name: 'VuexPage',

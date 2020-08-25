@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-Vue.use(Router)
+Vue.use(Router);
 
 function load(component) {
   // '@' is aliased to src/components
@@ -39,6 +39,11 @@ export default new Router({
       path: '/vuex',
       name: 'VuexPage',
       component: load('VuexPage')
+    },
+    {
+      path: '/composition-api',
+      name: 'CompositionAPIPage',
+      component: load('CompositionAPIPage')
     },
   ]
 })
