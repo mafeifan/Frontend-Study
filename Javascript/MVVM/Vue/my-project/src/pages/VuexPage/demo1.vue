@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
   name: 'VuexDemo1',
   components: {
@@ -31,4 +29,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .VuexDemo{
+    border: 1px solid slategray;
+  }
 </style>
