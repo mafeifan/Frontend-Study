@@ -7,6 +7,7 @@
 </template>
 
 <script>
+    import { inject } from "@vue/composition-api";
     // https://composition-api.vuejs.org/zh
     // https://github.com/Wscats/vue-cli
     import Top from "./top";
@@ -18,5 +19,8 @@
             Search,
             Panel,
         },
+        setup() {
+          // provide('数据名称', 要传递的数据)
+        }
     }
 </script>

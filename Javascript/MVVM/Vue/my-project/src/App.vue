@@ -10,14 +10,19 @@
 </template>
 
 <script>
+    import { provide, reactive } from "@vue/composition-api";
     import route from './router'
     export default {
         name: 'app',
-        data() {
-            return {
-                menus: route.options.routes
-            }
-        }
+        setup(props, context) {
+          provide("_Title", "我是父组件向子组件传递的值");
+          const state = reactive({
+            menus: route.options.routes
+          })
+          return {
+            ...state
+          }
+        },
     }
 </script>
 

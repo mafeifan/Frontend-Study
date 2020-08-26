@@ -1,10 +1,10 @@
 <template>
   <h3 :style="{
     backgroundColor: color ? color : defaultColor
-  }">{{title}}</h3>
+  }">{{customVal}}</h3>
 </template>
 <script>
-    import { reactive } from "@vue/composition-api";
+    import { reactive, inject  } from "@vue/composition-api";
     export default {
         name: 'top',
         // 父组件传递进来更改该头部组件的属性值
@@ -15,12 +15,14 @@
             color: String
         },
         setup(props, context) {
+            const customVal = inject("_Title");
             console.log(props);
             console.log(context);
             const state = reactive({
                 defaultColor: "red"
             });
             return {
+                customVal,
                 ...state
             };
         }
