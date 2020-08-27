@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <title>CanvasLayer</title>
+  <script src="http://api.map.baidu.com/api?v=3.0&ak=DODZZuc0M1TjXPKId0ZylvItnpK7gKqa"></script>
+  <style type="text/css">
+    body, html, #map {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      font-family: "微软雅黑";
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+</body>
+</html>
+<script type="text/javascript">
+    function setCustomCamera() {
+        function CameraControl() {
+            // 设置位置和偏移量
+            // http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/widget
+            this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
+            this.defaultOffset = new BMap.Size(10, 10);
+        }
+
+        CameraControl.prototype = new BMap.Control();
+        CameraControl.prototype.initialize = function (map) {
+            var img = document.createElement('img');
+            img.src = './images/icon_camera.svg';
+            img.addEventListener('click', function (e) {
+                console.log(e);
+                map.zoomTo(map.getZoom() + 2);
+            });
+            map.getContainer().appendChild(img);
+            return img;
+        };
+        return new CameraControl();
+    }
+
+    function setMap() {
+        var map = new BMap.Map("map");
+        // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMap.Point(116.3964, 39.9093), 10);
+        // 开启鼠标滚轮缩放
+        map.enableScrollWheelZoom();
+        // 切换地图模式
+        // map.setMapType(BMAP_SATELLITE_MAP);
+        var canvasLayer = new BMap.CanvasLayer({
+            update: update
+        });
+
+        function update() {
+            var ctx = this.canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            var temap = {};
+            ctx.fillStyle = "rgba(50, 50, 255, 0.7)";
+            ctx.beginPath();
+            var data = [
+                new BMap.Point(116.297047, 39.979542),
+                new BMap.Point(116.321768, 39.88748),
+                new BMap.Point(116.494243, 39.956539)
+            ];
+
+            for (var i = 0, len = data.length; i < len; i++) {
+                var pixel = map.pointToPixel(data[i]);
+                ctx.fillRect(pixel.x, pixel.y, 30, 30);
+            }
+        }
+
+        map.addOverlay(canvasLayer);
+        return map;
+    }
+
+    let map = setMap();
+    // 添加自定义地图控件
+    map.addControl(setCustomCamera());
+
+
+</script>
