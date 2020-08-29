@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <title>CanvasLayer</title>
+  <script src="http://api.map.baidu.com/api?v=3.0&ak=DODZZuc0M1TjXPKId0ZylvItnpK7gKqa"></script>
+  <style type="text/css">
+    body, html, #map {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      font-family: "微软雅黑";
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+</body>
+</html>
+<script src="./js/raderHelper.js"></script>
+<script type="text/javascript">
+    // 雷达假数据, 大部分字段用不上
+    const mockRadarList = [
+        {
+            "RadarId": 1,
+            "EnableRange": 10000,
+            "Longitude": 115.915962,
+            "Latitude": 40.365623,
+            "Height": 100,
+            "Province": "北京",
+            "City": "北京",
+            "County": "密云",
+            "label": "密云机场"
+        },
+        {
+            "RadarId": 2,
+            "EnableRange": 10000,
+            "Longitude": 117.099319,
+            "Latitude": 39.374645,
+            "Height": 100,
+            "Province": "北京",
+            "City": "北京",
+            "County": "杨村机场",
+            "label": "大兴机场"
+        },
+        {
+            "RadarId": 3,
+            "RadarType": 1,
+            "EnableRange": 10000,
+            "Longitude": 116.464432,
+            "Latitude": 39.519623,
+            "Province": "北京",
+            "City": "北京",
+            "County": "大兴机场",
+            "label": "杨村机场"
+        }
+    ];
+
+    let radarInterval =  null;
+
+    let currentDeg = 0;
+    /**
+     * @see http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/widget
+     * 自定义控件
+     * @returns {CameraControl}
+     */
+    function setCustomCamera() {
+        function CameraControl() {
+            // 设置位置和偏移量
+            this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
+            this.defaultOffset = new BMap.Size(10, 10);
+        }
+
+        CameraControl.prototype = new BMap.Control();
+        CameraControl.prototype.initialize = function (map) {
+            var img = document.createElement('img');
+            img.src = './images/icon_camera.svg';
+            img.addEventListener('click', function (e) {
+                console.log(e);
+                map.zoomTo(map.getZoom() + 2);
+            });
+            map.getContainer().appendChild(img);
+            return img;
+        };
+        return new CameraControl();
+    }
+
+    function setMap() {
+        var map = new BMap.Map("map");
+        // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMap.Point(116.3964, 39.9093), 10);
+        // 开启鼠标滚轮缩放
+        map.enableScrollWheelZoom();
+        // 切换地图模式
+        map.setMapType(BMAP_SATELLITE_MAP);
+
+        // 绘制雷达层
+        var radarCanvasLayer = new BMap.CanvasLayer({
+            update: update
+        });
+
+        function update() {
+            var ctx = this.canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            // 在地图上绘制三个雷达效果！！
+            mockRadarList.forEach(radar => {
+                const radarHelper = new RadarHelper(ctx, map);
+                radarHelper.drawRadar(radar);
+            });
+
+            // ctx.fillStyle = "rgba(50, 50, 255, 0.7)";
+            // ctx.beginPath();
+            // var data = [
+            //     new BMap.Point(116.297047, 39.979542),
+            //     new BMap.Point(116.321768, 39.88748),
+            //     new BMap.Point(116.494243, 39.956539)
+            // ];
+            //
+            // for (var i = 0, len = data.length; i < len; i++) {
+            //     var pixel = map.pointToPixel(data[i]);
+            //     ctx.fillRect(pixel.x, pixel.y, 30, 30);
+            // }
+        }
+
+        map.addOverlay(radarCanvasLayer);
+
+        // 绘制扫描层
+        const radarScanningLayer = new BMap.CanvasLayer({
+          paneName: 'vertexPane',
+          update: function () {
+            const ctx = this.canvas.getContext('2d')
+            if (!ctx) {
+              return
+            }
+
+            if (radarInterval) {
+              clearInterval(radarInterval)
+            }
+            radarInterval = setInterval(() => {
+              ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+              currentDeg += 2
+              if (currentDeg >= 360) {
+                currentDeg = 0
+              }
+              mockRadarList.forEach(radar => {
+                const radarHelper = new RadarHelper(ctx, map)
+                radarHelper.drawRadarScanner(radar, currentDeg)
+              })
+            }, 50)
+          }
+        })
+        map.addOverlay(radarScanningLayer)
+
+        return map;
+    }
+
+
+    let map = setMap();
+    // 添加自定义地图控件
+    map.addControl(setCustomCamera());
+
+
+
+</script>

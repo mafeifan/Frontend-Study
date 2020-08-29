@@ -1,3 +1,8 @@
+/**
+ * Lodash 的 round 函数
+ * @param methodName
+ * @returns {function(...[*]=)}
+ */
 function createRound(methodName) {
   const func = Math[methodName]
   return (number, precision) => {
