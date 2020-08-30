@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="10px" viewBox="0 0 6 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>arrow_yellow</title>
+    <g id="安卓版本" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1-1首页-单个雷达区" transform="translate(-200.000000, -211.000000)" fill="#FCEC06">
+            <g id="位图-+-编组-4-+-编组-6-蒙版" transform="translate(0.000000, 86.000000)">
+                <g id="编组-4备份">
+                    <g transform="translate(113.000000, 37.000000)">
+                        <g id="编组-8备份" transform="translate(98.000000, 93.000000) scale(-1, 1) translate(-98.000000, -93.000000) translate(87.000000, 88.000000)">
+                            <polygon id="矩形" points="1 4 19 4 19 6 1 6"></polygon>
+                            <polygon id="三角形" transform="translate(19.000000, 5.000000) rotate(90.000000) translate(-19.000000, -5.000000) " points="19 2 24 8 14 8"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

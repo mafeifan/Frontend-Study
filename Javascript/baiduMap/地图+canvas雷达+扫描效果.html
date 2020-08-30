@@ -16,8 +16,6 @@
 </head>
 <body>
 <div id="map"></div>
-</body>
-</html>
 <script src="./js/raderHelper.js"></script>
 <script type="text/javascript">
     // 雷达假数据, 大部分字段用不上
@@ -57,9 +55,10 @@
         }
     ];
 
-    let radarInterval =  null;
+    let radarInterval = null;
 
     let currentDeg = 0;
+
     /**
      * @see http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/widget
      * 自定义控件
@@ -133,29 +132,29 @@
 
         // 绘制扫描层
         const radarScanningLayer = new BMap.CanvasLayer({
-          paneName: 'vertexPane',
-          update: function () {
-            const ctx = this.canvas.getContext('2d')
-            if (!ctx) {
-              return
-            }
+            paneName: 'vertexPane',
+            update: function () {
+                const ctx = this.canvas.getContext('2d')
+                if (!ctx) {
+                    return
+                }
 
-            if (radarInterval) {
-              clearInterval(radarInterval)
-            }
-            radarInterval = setInterval(() => {
-              ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+                if (radarInterval) {
+                    clearInterval(radarInterval)
+                }
+                radarInterval = setInterval(() => {
+                    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-              currentDeg += 2
-              if (currentDeg >= 360) {
-                currentDeg = 0
-              }
-              mockRadarList.forEach(radar => {
-                const radarHelper = new RadarHelper(ctx, map)
-                radarHelper.drawRadarScanner(radar, currentDeg)
-              })
-            }, 50)
-          }
+                    currentDeg += 2
+                    if (currentDeg >= 360) {
+                        currentDeg = 0
+                    }
+                    mockRadarList.forEach(radar => {
+                        const radarHelper = new RadarHelper(ctx, map)
+                        radarHelper.drawRadarScanner(radar, currentDeg)
+                    })
+                }, 50)
+            }
         })
         map.addOverlay(radarScanningLayer)
 
@@ -168,5 +167,6 @@
     map.addControl(setCustomCamera());
 
 
-
 </script>
+</body>
+</html>
