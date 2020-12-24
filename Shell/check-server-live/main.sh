@@ -1,4 +1,5 @@
 #! /bin/bash
+# 检测服务器存活状态
 
 TIMESTAMP=`date +%Y%m%d%H%M%S`
 CURRENT_HTML=${TIMESTAMP}.html
@@ -20,11 +21,26 @@ cat <<EOF > $CURRENT_HTML
       <th>Server IP</th>
       <th>Server Status</th>
     </tr>
-  </table>
+EOF
+
+
+while read SERVERS
+do
+  # 如果ping的结果返回o则状态是0K的，同时显示字体的颜色为blue
+  # 如果ping的结果返回非0则状态是FALSE的，同时显示字体的颜色为red
+ping $SERVERS -c 3 > /dev/null;
+if [ "$?" == "0" ]; then
+STATUS=OK
+COLOR=blue
+else
+  STATUS=FALSE
+  COLOR=red
+fi
+echo "<tr><td>$SERVERS</td><td><font color=$COLOR>$STATUS</font></td></tr>" >> $CURRENT_HTML
+done < $SERVER_LIST
+
+cat <<EOF >> $CURRENT_HTML
+</table>
 </body>
 </html>
 EOF
-# while read SERVERS
-# do
-# 如果ping的结果返回o则状态是0K的，同时显示字体的颜色为blue
-# 如果ping的结果返回非0则状态是F ALSE的，同时显示字体的颜色为red
