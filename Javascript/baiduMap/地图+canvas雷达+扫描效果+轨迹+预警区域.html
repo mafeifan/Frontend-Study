@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <title>CanvasLayer</title>
+  <script src="http://api.map.baidu.com/api?v=3.0&ak=DODZZuc0M1TjXPKId0ZylvItnpK7gKqa"></script>
+  <style type="text/css">
+    body, html, #map {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      font-family: "微软雅黑";
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="./js/raderHelper.js"></script>
+<script type="text/javascript">
+    // http://lbsyun.baidu.com/jsdemo.htm#fEditOverlay
+
+    // 雷达假数据, 大部分字段用不上
+    const mockRadarList = [
+        {
+            "RadarId": 1,
+            "EnableRange": 10000,
+            "Longitude": 115.915962,
+            "Latitude": 40.365623,
+            "Height": 100,
+            "Province": "北京",
+            "City": "北京",
+            "County": "密云",
+            "label": "密云机场"
+        },
+        {
+            "RadarId": 2,
+            "EnableRange": 10000,
+            "Longitude": 117.099319,
+            "Latitude": 39.374645,
+            "Height": 100,
+            "Province": "北京",
+            "City": "北京",
+            "County": "杨村机场",
+            "label": "大兴机场"
+        },
+        {
+            "RadarId": 3,
+            "RadarType": 1,
+            "EnableRange": 10000,
+            "Longitude": 116.464432,
+            "Latitude": 39.519623,
+            "Province": "北京",
+            "City": "北京",
+            "County": "大兴机场",
+            "label": "杨村机场"
+        }
+    ];
+
+    // 雷达轨迹假数据
+    const mockRadarTraceList = {
+        "1": [
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 365
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 366
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 367
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 368
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 369
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 370
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 371
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 372
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 373
+            },
+            {
+                "Batch": 1,
+                "Score": 12,
+                "Azimuth": 315,
+                "Pictch": 30,
+                "Range": 2500,
+                "Speed": 120,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 80,
+                "Latitude": 39.935919,
+                "Longitude": 116.399318,
+                "Height": 1514,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 2,
+                "RadarId": 1,
+                "requestBatch": 374
+            }
+        ],
+        "2": [
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 365
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 366
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 367
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 368
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 369
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 370
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 371
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 372
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 373
+            },
+            {
+                "Batch": 2,
+                "Score": 88,
+                "Azimuth": 225,
+                "Pictch": 54,
+                "Range": 2000,
+                "Speed": 210,
+                "Direction": 0.1,
+                "IsFaraway": 0,
+                "Snr": 110,
+                "Latitude": 39.907262,
+                "Longitude": 116.403461,
+                "Height": 869,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 1,
+                "requestBatch": 374
+            }
+        ],
+        "3": [
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 365
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 366
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 367
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 368
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 369
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 370
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 371
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 372
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 373
+            },
+            {
+                "Batch": 3,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60,
+                "Range": 1250,
+                "Speed": 128,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 79,
+                "Latitude": 39.912039,
+                "Longitude": 116.430337,
+                "Height": 612,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 0,
+                "RadarId": 1,
+                "requestBatch": 374
+            }
+        ],
+        "4": [
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 365
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 366
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 367
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 368
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 369
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 370
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 371
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 372
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 373
+            },
+            {
+                "Batch": 4,
+                "Score": 1,
+                "Azimuth": 135,
+                "Pictch": 60.099998,
+                "Range": 2500.100098,
+                "Speed": 0.3,
+                "Direction": 0.1,
+                "IsFaraway": 1,
+                "Snr": 21.6,
+                "Latitude": 39.864076,
+                "Longitude": 116.290661,
+                "Height": 234.432007,
+                "TimeStamp": "2020-01-01 10:10:10",
+                "TargetType": 1,
+                "RadarId": 2,
+                "requestBatch": 374
+            }
+        ]
+    };
+
+    // 预警区域假数据
+    const mockWarnAreas = [{
+      "AreaId": 1,
+      "Type": 1, // 1 圆形 2 多边形
+      "RadarId": 1,
+      "Radius": 2000.000000,
+      "CoordinateCount": 2,
+      "CoordinateList": [{
+        "Longitude": 100.000000,
+        "Latitude": 200.000000
+      }, {
+        "Longitude": 100.000000,
+        "Latitude": 200.000000
+      }]
+    }];
+
+    let radarInterval = null;
+
+    let currentDeg = 0;
+
+    /**
+     * @see http://lbsyun.baidu.com/index.php?title=jspopular3.0/guide/widget
+     * 自定义控件
+     * @returns {CameraControl}
+     */
+    function setCustomCamera() {
+        function CameraControl() {
+            // 设置位置和偏移量
+            this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
+            this.defaultOffset = new BMap.Size(10, 10);
+        }
+
+        CameraControl.prototype = new BMap.Control();
+        CameraControl.prototype.initialize = function (map) {
+            var img = document.createElement('img');
+            img.src = './images/icon_camera.svg';
+            img.addEventListener('click', function (e) {
+                console.log(e);
+                map.zoomTo(map.getZoom() + 2);
+            });
+            map.getContainer().appendChild(img);
+            return img;
+        };
+        return new CameraControl();
+    }
+
+    function setMap() {
+        var map = new BMap.Map("map");
+        // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMap.Point(116.3964, 39.9093), 10);
+        // 开启鼠标滚轮缩放
+        map.enableScrollWheelZoom();
+        // 切换地图模式
+        map.setMapType(BMAP_SATELLITE_MAP);
+
+        // 绘制雷达层
+        var radarCanvasLayer = new BMap.CanvasLayer({
+            update: update
+        });
+
+        function update() {
+            var ctx = this.canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            // 在地图上绘制三个雷达效果！！
+            mockRadarList.forEach(radar => {
+                const radarHelper = new RadarHelper(ctx, map);
+                radarHelper.drawRadar(radar);
+            });
+        }
+
+        map.addOverlay(radarCanvasLayer);
+
+        // 绘制扫描层
+        const radarScanningLayer = new BMap.CanvasLayer({
+            paneName: 'vertexPane',
+            update: function () {
+                const ctx = this.canvas.getContext('2d')
+                if (!ctx) {
+                    return
+                }
+
+                if (radarInterval) {
+                    clearInterval(radarInterval)
+                }
+                radarInterval = setInterval(() => {
+                    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+                    currentDeg += 2
+                    if (currentDeg >= 360) {
+                        currentDeg = 0
+                    }
+                    mockRadarList.forEach(radar => {
+                        const radarHelper = new RadarHelper(ctx, map)
+                        radarHelper.drawRadarScanner(radar, currentDeg)
+                    })
+                }, 50)
+            }
+        })
+        map.addOverlay(radarScanningLayer)
+
+        return map;
+    }
+
+
+    let map = setMap();
+    // 添加自定义地图控件
+    map.addControl(setCustomCamera());
+
+    setRadarTraces();
+
+    setWarnArea();
+
+    function setRadarTraces () {
+        if (mockRadarTraceList) {
+            Object.keys(mockRadarTraceList).forEach(key => {
+                const traces = mockRadarTraceList[key]
+                if (traces && traces.length) {
+                    setRadarItemTrace(traces)
+                }
+            })
+        }
+    }
+
+    function setRadarItemTrace (traces) {
+        const trace = traces[traces.length - 1];
+        const point = new BMap.Point(trace.Longitude, trace.Latitude);
+        // const traceType = getTraceType(trace);
+        const traceType = 'yellow';
+        // 航迹点
+        setRadarItemMarker(trace, point, traceType);
+        // 航迹点label
+        const colors = {
+            blue: '#00F0F2',
+            red: '#F84040',
+            yellow: '#FCEC06'
+        };
+        setRadarItemLabel(trace, point, traceType, colors);
+        // 航迹历史线
+        setRadarItemPolyline(traces, traceType, colors)
+    }
+
+    function setRadarItemMarker (trace, point, traceType) {
+        const marker = new BMap.Marker(point, {
+            offset: new BMap.Size(0, 0),
+            icon: new BMap.Icon(`./images/arrow_${traceType}.svg`, new BMap.Size(6, 10)),
+            rotation: trace.Direction + 90
+        });
+        map.addOverlay(marker);
+    }
+
+    function setRadarItemLabel (trace, point, traceType, colors) {
+        const label = new BMap.Label(`ID:${trace.Batch}`, {
+            position: point,
+            offset: new BMap.Size(-3, 10)
+        });
+        label.setStyle({
+            color: colors[traceType],
+            border: 'none',
+            background: 'none',
+            fontWeight: 'bold'
+        });
+        console.log(111);
+        map.addOverlay(label)
+    }
+
+    function setRadarItemPolyline (traces, traceType, colors) {
+        if (traces.length < 2) {
+            return
+        }
+        const options = {
+            strokeColor: colors[traceType],
+            strokeWeight: 2,
+            strokeOpacity: 1
+        };
+        const polylinePoints = traces.map(trace => {
+            return new BMap.Point(trace.Longitude, trace.Latitude)
+        });
+        const polyline = new BMap.Polyline(polylinePoints, options);
+        map.addOverlay(polyline);
+    }
+
+    function setWarnArea() {
+      const drawOptions = {
+        strokeColor: '#FF0000',
+        strokeWeight: 1,
+        strokeOpacity: 0.9,
+        fillColor: '#FF0000',
+        fillOpacity: 0.2
+      }
+
+      mockWarnAreas.forEach(area => {
+        const radar = mockRadarList.find(radar => radar.RadarId === area.RadarId)
+        console.log(radar);
+        if (!radar) {
+          return
+        }
+        const circle = new BMap.Circle(new BMap.Point(radar.Longitude, radar.Latitude), area.Radius, drawOptions)
+        map.addOverlay(circle)
+        // this.warnAreaMapList.push(circle)
+        // this.radarTraceList.forEach(trace => {
+        //   const point = new BMap.Point(trace.Longitude, trace.Latitude)
+        //   if (BMapLib.GeoUtils.isPointInCircle(point, circle)) {
+        //     warnTraces.push(trace.uuid)
+        //   }
+        // })
+      });
+    }
+
+
+</script>
+</body>
+</html>
