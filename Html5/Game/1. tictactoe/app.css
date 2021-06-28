@@ -1,15 +1,61 @@
-body{color:#FA6766;font-family:Trebuchet MS,arial,verdana;margin:20px;padding:0pt;}
-h3{margin:0;padding:0;}
-div{float:left;}
-#table{ width:100%; }
-.row {width:100%;}
-.col {width:75px;float:left;height:75px;cursor:pointer;}
-.hr{ border-right:2px solid #FA6766;}
-.vr{ border-bottom:2px solid #FA6766;}
-.cross{background-image:url("http://sandbox.runjs.cn/uploads/rs/454/tvi0igb5/cross.png");}
-.round{background-image:url("http://sandbox.runjs.cn/uploads/rs/454/tvi0igb5/round.png");}
-#log{clear:both;margin:0pt;padding:0pt;}
-.reset{cursor:pointer;display:none;text-decoration:underline;}
+body {
+  color: #FA6766;
+  font-family: Trebuchet MS, arial, verdana;
+  margin: 20px;
+  padding: 0pt;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+div {
+  float: left;
+}
+
+#table {
+  width: 100%;
+}
+
+.row {
+  width: 100%;
+}
+
+.col {
+  width: 75px;
+  float: left;
+  height: 75px;
+  cursor: pointer;
+}
+
+.hr {
+  border-right: 2px solid #FA6766;
+}
+
+.vr {
+  border-bottom: 2px solid #FA6766;
+}
+
+.cross {
+  background-image: url("http://sandbox.runjs.cn/uploads/rs/454/tvi0igb5/cross.png");
+}
+
+.round {
+  background-image: url("http://sandbox.runjs.cn/uploads/rs/454/tvi0igb5/round.png");
+}
+
+#log {
+  clear: both;
+  margin: 0pt;
+  padding: 0pt;
+}
+
+.reset {
+  cursor: pointer;
+  display: none;
+  text-decoration: underline;
+}
 
 
 
