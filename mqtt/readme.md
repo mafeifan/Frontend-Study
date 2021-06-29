@@ -28,7 +28,6 @@
 （4）UnSubscribe取消订阅。
 （5）Publish发送消息请求，发送完成后返回应用程序线程。
 
-
 ## 参考
 
 https://github.com/moscajs/aedes/blob/main/docs/Examples.md

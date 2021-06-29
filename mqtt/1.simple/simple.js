@@ -10,8 +10,7 @@ client.on('connect', () => {
   })
 })
 
-// 用 MQTTX 客户端发消息模拟
-// 接收消息
+// 接收消息, 可以用 MQTTX 客户端发消息模拟
 client.on('message', (topic, message) => {
   // message is Buffer
   console.log(`topic: ${topic}`)
