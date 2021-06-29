@@ -1,6 +1,6 @@
 const mqtt = require('mqtt')
 
-// 使用官方提供的连接地址
+// 使用官方提供的broker连接地址
 const client = mqtt.connect('mqtt://test.mosquitto.org')
 
 // 连接成功后定订阅topic

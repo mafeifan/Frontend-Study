@@ -8,6 +8,9 @@
 
   // 公共的测试地址
   // const host = 'ws://broker.emqx.io:8083/mqtt'
+  // 探鸟测试地址
+  // const host = 'ws://49.232.138.70:8083/mqtt'
+
   const host = 'ws://localhost:8888/mqtt'
 
   // 参数含义见：https://github.com/mqttjs/MQTT.js#client
@@ -32,7 +35,7 @@
   // const client = mqtt.connect(host, options)
   const client = mqtt.connect(host, options)
 
-  // presence 是 topic名称
+  // presence 是 topic 名称
   client.on('connect', function () {
     client.subscribe('presence', function (err) {
       if (!err) {

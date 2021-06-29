@@ -1,6 +1,6 @@
-浏览器WebSocket接收消息
+浏览器WebSocket接收消息，本地跑MTQQ服务端和模拟发送消息
 
-依次运行，本地跑MTQQ服务端和模拟发送消息
+依次运行
 
 服务端代理（broker），中转消息
 * node server.js
