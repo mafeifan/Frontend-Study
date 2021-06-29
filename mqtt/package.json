@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "aedes": "^0.46.0",
+    "mqtt": "^4.2.8",
+    "websocket-stream": "^5.5.2"
+  }
+}

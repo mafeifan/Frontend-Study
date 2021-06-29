@@ -13,6 +13,7 @@
     "@vue/composition-api": "^1.0.0-beta.11",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "mqtt": "^4.2.8",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "vant": "^2.10.3",

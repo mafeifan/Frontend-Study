@@ -50,5 +50,10 @@ export default new Router({
       name: 'DialogPromisePage',
       component: load('DialogPromisePage')
     },
+    {
+      path: '/mqtt',
+      name: 'MQTTPage',
+      component: load('MQTTPage')
+    },
   ]
 })
