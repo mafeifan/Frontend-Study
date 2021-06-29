@@ -1,5 +1,5 @@
 let mqtt = require('mqtt')
-let client = mqtt.connect('mqtt://localhost:1883')
+let client = mqtt.connect('ws://localhost:8888/mqtt')
 
 client.on('connect', () => {
   // 每隔 1s 发布主题为 presence 的消息

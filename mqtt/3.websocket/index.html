@@ -1,34 +1,38 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
+<div id="content"></div>
 <script src="https://unpkg.com/mqtt@4.2.8/dist/mqtt.min.js"></script>
 <script>
-  console.log(mqtt);
+  // 生成一个唯一标识的clientId，用于连接服务端
   const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
   // 公共的测试地址
   // const host = 'ws://broker.emqx.io:8083/mqtt'
   const host = 'ws://localhost:8888/mqtt'
 
+  // 参数含义见：https://github.com/mqttjs/MQTT.js#client
   const options = {
     keepalive: 60,
     clientId: clientId,
     protocolId: 'MQTT',
     protocolVersion: 4,
-    clean: true,
-    reconnectPeriod: 1000,
-    connectTimeout: 30 * 1000,
-    will: {
-      topic: 'WillMsg',
-      payload: 'Connection Closed abnormally..!',
-      qos: 0,
-      retain: false
-    },
+    clean: true, // set to false to receive QoS 1 and 2 messages while offline
+    reconnectPeriod: 1000, // 1000 milliseconds, interval between two reconnections. Disable auto reconnect by setting to 0.
+    connectTimeout: 30 * 1000, // 30 * 1000 milliseconds, time to wait before a CONNACK is received
+    // 当断开连接自动往指定topic发送的消息
+    // will: {
+    //   topic: 'WillMsg',
+    //   payload: 'Connection Closed abnormally..!',
+    //   qos: 0,
+    //   retain: false
+    // },
   }
 
   console.log('Connecting mqtt client')
   // const client = mqtt.connect(host, options)
   const client = mqtt.connect(host, options)
 
+  // presence 是 topic名称
   client.on('connect', function () {
     client.subscribe('presence', function (err) {
       if (!err) {
@@ -48,6 +52,8 @@
 
   client.on('message', (topic, message) => {
     console.log('收到消息：', topic, message.toString())
+    // 将消息显示在页面上
+    document.querySelector("#content").append(message.toString() + ' | ');
   })
 </script>
 </html>
