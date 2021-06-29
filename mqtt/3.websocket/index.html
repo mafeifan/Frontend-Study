@@ -1,8 +1,13 @@
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+<html>
+
+<script src="https://unpkg.com/mqtt@4.2.8/dist/mqtt.min.js"></script>
 <script>
+  console.log(mqtt);
   const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
-  const host = 'ws://broker.emqx.io:8083/mqtt'
+  // 公共的测试地址
+  // const host = 'ws://broker.emqx.io:8083/mqtt'
+  const host = 'ws://localhost:8888/mqtt'
 
   const options = {
     keepalive: 60,
@@ -22,7 +27,7 @@
 
   console.log('Connecting mqtt client')
   // const client = mqtt.connect(host, options)
-  const client = mqtt.connect('mqtt://test.mosquitto.org')
+  const client = mqtt.connect(host, options)
 
   client.on('connect', function () {
     client.subscribe('presence', function (err) {
@@ -40,4 +45,9 @@
   client.on('reconnect', () => {
     console.log('Reconnecting...')
   })
+
+  client.on('message', (topic, message) => {
+    console.log('收到消息：', topic, message.toString())
+  })
 </script>
+</html>
