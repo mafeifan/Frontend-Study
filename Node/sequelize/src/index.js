@@ -7,7 +7,6 @@
 
 const models = require('./models/index');
 
-
 const UserModel = models.User;
 
 UserModel.findOne( { include: 'Project' })

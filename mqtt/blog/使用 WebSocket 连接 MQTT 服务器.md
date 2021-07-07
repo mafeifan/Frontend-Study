@@ -8,8 +8,6 @@ WebSocket 使得客户端和服务器之间的数据交换变得更加简单，�
 
 [MQTT 协议第 6 章 ](https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc398718127)详细约定了 MQTT 在 WebSocket [RFC6455] 连接上传输需要满足的条件，协议内容不在此详细赘述。
 
-
-
 ## 两款客户端比较
 
 ### Paho.mqtt.js
@@ -21,8 +19,6 @@ WebSocket 使得客户端和服务器之间的数据交换变得更加简单，�
 [MQTT.js](https://github.com/mqttjs/MQTT.js) 是一个完全开源的 MQTT 协议的客户端库，使用 JavaScript 编写，可用于 Node.js 和浏览器。在 Node.js 端可以通过全局安装使用命令行连接，同时支持  MQTT/TCP、MQTT/TLS、MQTT/WebSocket 连接；值得一提的是 MQTT.js 还对微信小程序有较好的支持。
 
 本文将使用 MQTT.js 库进行 WebSocket 的连接讲解。
-
-
 
 ## 安装 MQTT.js
 

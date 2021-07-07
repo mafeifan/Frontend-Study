@@ -1,6 +1,6 @@
 module.exports = {
   mysql: {
-    database: 'riot_match_local',
+    database: 'bird_mqtt',
     username: 'root',
     password: '',
     options: {
@@ -11,6 +11,7 @@ module.exports = {
       // logging: sql => {},
       operatorsAliases: false,
     },
+    // 打印sql
     debug: true,
   },
 }
