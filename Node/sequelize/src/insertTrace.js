@@ -23,10 +23,10 @@ subscriber.on('connect', () => {
 subscriber.on('message', (topic, message) => {
   // message is Buffer
   console.log(`topic: ${topic}`)
-  save(message)
+  saveRadarTraceData(message)
 })
 
-function save(message) {
+function saveRadarTraceData(message) {
   // 从utf-8转成十六进制
   const data = Buffer.from(message, 'utf-8').toString('hex');
   // 从十六进制转成utf-8
