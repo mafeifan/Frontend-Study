@@ -43,6 +43,7 @@
   let height = 0; //
   let streaming = false; // 是否开始捕获媒体
 
+  // 需要https
   // 获取用户媒体,包含视频和音频
   navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(stream => {

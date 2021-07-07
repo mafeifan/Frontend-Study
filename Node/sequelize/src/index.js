@@ -12,10 +12,8 @@ const UserModel = models.User;
 UserModel.findOne( { include: 'Project' })
   .then(res => console.log(res.Project.name))
 
-
 UserModel.findOne( { include: 'ProjectRef' })
   .then(res => console.log(res.ProjectRef.name))
-
 
 UserModel.findAll( {include: 'PostRef'} )
 .then(res => {

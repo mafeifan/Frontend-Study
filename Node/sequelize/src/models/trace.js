@@ -6,13 +6,14 @@
  */
 module.exports = (sequelize, DataType) => {
   const Trace = sequelize.define('Trace', {
-      id: {
-        type         : DataType.INTEGER,
-        primaryKey   : true,
-        autoIncrement: true,
-        notNull      : true
-      },
-      data : DataType.STRING,
+    id: {
+      type: DataType.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      notNull: true
+    },
+    hex: DataType.STRING,
+    json: DataType.STRING,
   });
 
   return Trace;

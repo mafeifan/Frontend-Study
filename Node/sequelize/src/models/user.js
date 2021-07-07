@@ -18,12 +18,9 @@ module.exports = (sequelize, DataType) => {
 
   User.associate = function(models) {
     models.User.hasOne(models.Project, { foreignKey: 'userId', sourceKey: 'id' });
-
     // 别名, 覆盖默认的模型名 Project
     models.User.hasOne(models.Project, { as:'ProjectRef', foreignKey: 'userId', sourceKey: 'id' });
-
     models.User.hasMany(models.Post, { as:'PostRef', foreignKey: 'userId'});
   };
-
   return User;
 };

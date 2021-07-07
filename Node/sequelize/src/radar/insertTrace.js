@@ -5,7 +5,9 @@
  * Time: 上午9:28
  */
 
-const models = require('./models/index');
+// 获取mqtt中的雷达数据，16进制解析后并插入到traces表中
+
+const models = require('../models/index');
 const Model = models.Trace;
 const mqtt = require('mqtt')
 const subscriber = mqtt.connect('ws://49.232.138.70:8083/mqtt')
@@ -35,7 +37,7 @@ function saveRadarTraceData(message) {
   // console.log(message.toString())
   // client.end()
   Model.create({
-    data: data
+    hex: data
   }).then(function (users) {
     // console.log(users);
   });
