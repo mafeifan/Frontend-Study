@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <title>CanvasLayer</title>
+  <script src="http://api.map.baidu.com/api?v=3.0&ak=DODZZuc0M1TjXPKId0ZylvItnpK7gKqa"></script>
+  <style type="text/css">
+    body, html, #map {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      margin: 0;
+      font-family: "微软雅黑";
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="./js/raderHelper.js"></script>
+<script type="text/javascript">
+    // http://lbsyun.baidu.com/jsdemo.htm#fEditOverlay
+    var x = 116.39390563964844;
+    var y = 39.49738693237305;
+
+    var map = new BMap.Map("map");
+    // 初始化地图,设置中心点坐标和地图级别
+    map.centerAndZoom(new BMap.Point(x, y), 10);
+    // 开启鼠标滚轮缩放
+    map.enableScrollWheelZoom();
+    // 切换地图模式 为卫星地图
+    map.setMapType(BMAP_SATELLITE_MAP);
+
+    var ggPoint = new BMap.Point(x,y);
+
+    // 添加gps marker和label
+    var markergg = new BMap.Marker(ggPoint);
+    map.addOverlay(markergg);
+
+
+    //坐标转换完之后的回调函数
+    translateCallback = function (data){
+      console.log(data);
+      if (data.status === 0) {
+        var marker = new BMap.Marker(data.points[0]);
+        map.addOverlay(marker);
+        var label = new BMap.Label("转换后的百度坐标（正确）",{offset:new BMap.Size(20,-10)});
+        marker.setLabel(label); //添加百度label
+        map.setCenter(data.points[0]);
+      }
+    }
+
+    // 经纬度转换
+    var convertor = new BMap.Convertor();
+    var pointArr = [];
+    pointArr.push(ggPoint);
+    convertor.translate(pointArr, 1, 5, translateCallback)
+</script>
+</body>
+</html>

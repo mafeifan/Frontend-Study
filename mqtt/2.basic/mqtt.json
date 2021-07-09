@@ -1,0 +1,197 @@
+{
+  "clientId": "mqttx_3179344a",
+  "name": "ws://49.232.138.70:8083/mqtt",
+  "clean": true,
+  "protocol": "ws",
+  "host": "49.232.138.70",
+  "keepalive": 60,
+  "connectTimeout": 10,
+  "reconnect": false,
+  "username": "",
+  "password": "",
+  "path": "/mqtt",
+  "port": 8083,
+  "ssl": false,
+  "certType": "",
+  "rejectUnauthorized": true,
+  "ca": "",
+  "cert": "",
+  "key": "",
+  "mqttVersion": "3.1.1",
+  "subscriptions": [
+    {
+      "topic": "bird",
+      "qos": 0,
+      "color": "#4EDC8A"
+    },
+    {
+      "topic": "radar/state",
+      "qos": 0,
+      "color": "#93970D"
+    }
+  ],
+  "messages": [
+    {
+      "mid": "90f342fe-f327-46b7-be4e-0a9436aac586",
+      "out": true,
+      "createAt": "2021-07-08 17:53:31",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "94b2d729-7dfe-45ac-8309-e9230ee75e88",
+      "out": false,
+      "createAt": "2021-07-08 17:53:31",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "5722749f-33dd-4956-9471-abbc0303bce8",
+      "out": true,
+      "createAt": "2021-07-08 17:53:33",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "219ccff8-c51e-4e39-9eba-be88a0f4bf11",
+      "out": false,
+      "createAt": "2021-07-08 17:53:33",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "06c84da5-b1b0-4a82-b06c-af383582e082",
+      "out": true,
+      "createAt": "2021-07-08 17:53:34",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "17325841-c9e9-4b6f-9ddf-96e0e4bebe54",
+      "out": false,
+      "createAt": "2021-07-08 17:53:34",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "5d0af413-3e4d-450c-95c4-c0ec444f118d",
+      "out": true,
+      "createAt": "2021-07-08 17:53:34",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "c0c1bb61-77f8-46a7-bed3-149109b0feea",
+      "out": false,
+      "createAt": "2021-07-08 17:53:34",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "f4fcdcd7-af77-4233-9d26-4c4f1d4b6453",
+      "out": true,
+      "createAt": "2021-07-08 17:53:35",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "b184ccd5-00c0-44d8-8d3c-7fce66b3320d",
+      "out": false,
+      "createAt": "2021-07-08 17:53:35",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "1c10a259-fa7f-4881-8df9-3afe6eb7e3b4",
+      "out": false,
+      "createAt": "2021-07-08 18:03:54",
+      "topic": "radar/state",
+      "payload": "7b0a20202252616461724964223a20312c0a202022456e61626c6552616e6765223a20353030302c0a2020224c6f6e676974756465223a203131362e34323339362c0a2020224c61746974756465223a2033392e3531313537362c0a202022486569676874223a203130302c0a20202250726f76696e6365223a2022e58c97e4baac222c0a20202243697479223a2022e58c97e4baac222c0a202022436f756e7479223a2022e5a4a7e585b4222c0a2020226c6162656c223a2022e5a4a7e585b4e69cbae59cba220a7d",
+      "qos": 0,
+      "retain": true
+    },
+    {
+      "mid": "f40986d5-7aab-48c1-a8f1-c7fffce9c568",
+      "out": true,
+      "createAt": "2021-07-08 18:03:56",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "74f3df14-32d6-49a1-9714-36822898e24f",
+      "out": false,
+      "createAt": "2021-07-08 18:03:56",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "9473a6a4-3b67-4323-8f58-0830c1dd4539",
+      "out": false,
+      "createAt": "2021-07-08 18:06:08",
+      "topic": "radar/state",
+      "payload": "7b0a20202252616461724964223a20312c0a202022456e61626c6552616e6765223a20353030302c0a2020224c6f6e676974756465223a203131362e34323339362c0a2020224c61746974756465223a2033392e3531313537362c0a202022486569676874223a203130302c0a20202250726f76696e6365223a2022e58c97e4baac222c0a20202243697479223a2022e58c97e4baac222c0a202022436f756e7479223a2022e5a4a7e585b4222c0a2020226c6162656c223a2022e5a4a7e585b4e69cbae59cba220a7d",
+      "qos": 0,
+      "retain": true
+    },
+    {
+      "mid": "27a07701-512b-4d81-a156-9a0585c408e8",
+      "out": true,
+      "createAt": "2021-07-08 18:06:10",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    },
+    {
+      "mid": "07d18b06-7a9c-420f-bf28-b7ef7b257c07",
+      "out": false,
+      "createAt": "2021-07-08 18:06:10",
+      "topic": "bird",
+      "payload": "1111aaaa6000622b00000500a4703d0ad783574000000000000010400000000000188c409a9999999999114014ae47e17a546a403d0ad7a3707d3040e6fa1d424fc8e84248e17942191c5d849fbdd8080000000000000100000000000070a740",
+      "qos": 0,
+      "retain": false
+    }
+  ],
+  "unreadMessageCount": 0,
+  "client": {
+    "connected": false
+  },
+  "will": {
+    "lastWillTopic": "",
+    "lastWillPayload": "",
+    "lastWillQos": 0,
+    "lastWillRetain": false,
+    "properties": {
+      "contentType": ""
+    }
+  },
+  "clientIdWithTime": false,
+  "isCollection": false,
+  "collectionId": "collection_793a61a6-d13e-417c-8892-a5e92eca4e3d",
+  "id": "f6004f49-d6db-4a91-befd-d3eacaf1b31e",
+  "orderId": 1
+}
